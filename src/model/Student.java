@@ -7,11 +7,11 @@ import java.util.Objects;
 public class Student {
     private int stuCode;
     private String stuName;
-    private Province homeTown;
+    private String homeTown;
     private Date dateOfBirth;
     private boolean sex; //1: Male, 0: Female
 
-    public Student(int stuCode, String stuName, Province homeTown, Date dateOfBirth, boolean sex){
+    public Student(int stuCode, String stuName, String homeTown, Date dateOfBirth, boolean sex){
         this.stuCode = stuCode;
         this.stuName = stuName;
         this.homeTown = homeTown;
@@ -23,7 +23,7 @@ public class Student {
         return dateOfBirth;
     }
 
-    public Province getHomeTown() {
+    public String getHomeTown() {
         return homeTown;
     }
 
@@ -43,7 +43,7 @@ public class Student {
         this.dateOfBirth = dateOfBirth;
     }
 
-    public void setHomeTown(Province homeTown) {
+    public void setHomeTown(String homeTown) {
         this.homeTown = homeTown;
     }
 
