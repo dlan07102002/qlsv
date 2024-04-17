@@ -13,8 +13,8 @@ import view.UpdateView;
 public class Test {
     public static void main(String[] args) throws ParseException {
       
-       
+       new QLSVView();
 
-        new UpdateView();
+        // new UpdateView();
     }
 }

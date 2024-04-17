@@ -2,6 +2,7 @@ package view;
 
 import javax.swing.*;
 
+import controller.UpdateController;
 import model.QLSVModel;
 import model.Student;
 
@@ -16,12 +17,11 @@ public class UpdateView extends JFrame {
 
     private JLabel lblStuCode, lblStuName, lblHomeTown, lblDateOfBirth, lblSex;
     private JTextField txtStuCode, txtStuName, txtHomeTown, txtDateOfBirth, txtSex;
-    private JButton btnSave;
+    private JButton jButton_save, jButton_create;
 
-    public UpdateView() {
-        this.qlsvModel = new QLSVModel();
+    public UpdateView(QLSVModel qlsvModel) throws ParseException {
+        this.qlsvModel = qlsvModel;
         initializeComponents();
-       
     }
 
     private void initializeComponents() {
@@ -38,18 +38,15 @@ public class UpdateView extends JFrame {
         txtDateOfBirth = new JTextField();
         lblSex = new JLabel("Sex:");
         txtSex = new JTextField();
-        btnSave = new JButton("Save");
 
-        btnSave.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                try {
-                    saveUpdatedStudentData();
-                } catch (ParseException e1) {
-                    // TODO Auto-generated catch block
-                    e1.printStackTrace();
-                }
-            }
-        });
+        UpdateController updateController = new UpdateController(this);
+
+        jButton_create = new JButton("Thêm");
+        jButton_create.addActionListener(updateController);
+
+
+        jButton_save = new JButton("Lưu");
+        jButton_save.addActionListener(updateController);
 
         add(lblStuCode);
         add(txtStuCode);
@@ -61,24 +58,49 @@ public class UpdateView extends JFrame {
         add(txtDateOfBirth);
         add(lblSex);
         add(txtSex);
-        add(btnSave);
+        add(jButton_save);
+        add(jButton_create);
 
         this.setVisible(true);
 
     }
-
-    private void saveUpdatedStudentData() throws ParseException {
+    public Student info() throws ParseException{
         int stuCode = Integer.parseInt(txtStuCode.getText());
         String stuName = txtStuName.getText();
         String homeTown = txtHomeTown.getText();
         Date dateOfBirth = new SimpleDateFormat("dd/MM/yyyy").parse(txtDateOfBirth.getText());
         boolean sex = Boolean.parseBoolean(txtSex.getText());
         Student temp = new Student(stuCode, stuName, homeTown, dateOfBirth, sex);
-        qlsvModel.update(temp);
-
-        JOptionPane.showMessageDialog(this, "Student information updated successfully.");
+        return temp;
     }
 
+    public void saveUpdatedStudentData() throws ParseException  {
+        Student temp = this.info();
+        if( qlsvModel.isStuCodeExist(temp.getStuCode()) || qlsvModel.isStudentExist(temp) ){
+            JOptionPane.showMessageDialog(this, "Mã sinh viên đã tồn tại! Vui lòng nhập mã sinh viên khác");
+        }
+        else {
+            qlsvModel.insert(temp);
+            JOptionPane.showMessageDialog(this, "Thông tin sinh viên đã được thêm thành công!");
+        }
+    }
+
+    public void saveCreatedStudentData() throws ParseException  {
+        Student temp = this.info();
+        if( qlsvModel.isStuCodeExist(temp.getStuCode()) || qlsvModel.isStudentExist(temp) ){
+            JOptionPane.showMessageDialog(this, "Mã sinh viên đã tồn tại! Vui lòng nhập mã sinh viên khác");
+        }
+        else {
+            qlsvModel.insert(temp);
+            JOptionPane.showMessageDialog(this, "Thông tin sinh viên đã được thêm thành công!");
+        }
+    }
+    
+    public void switchToQLSVView() throws ParseException {
+        // Tạo một UpdateView mới và ẩn view hiện tại
+        QLSVView qlsvView = new QLSVView(qlsvModel);
+        this.setVisible(false);
+    }
     
 }
 
