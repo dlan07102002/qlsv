@@ -16,6 +16,9 @@ import java.util.ArrayList;
 
 
 public class QLSVView extends JFrame {
+
+    SimpleDateFormat dF = new SimpleDateFormat("dd-MM-yyyy");
+
     private static QLSVModel qlsvModel;
     private JTable table;
     private DefaultTableModel tableModel;
@@ -90,7 +93,7 @@ public class QLSVView extends JFrame {
                     student.getStuCode(),
                     student.getStuName(),
                     student.getHomeTown(),
-                    student.getDateOfBirth(),
+                    dF.format(student.getDateOfBirth()),
                     // student.getSex()
             };
             tableModel.addRow(rowData);

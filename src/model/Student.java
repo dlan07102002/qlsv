@@ -11,12 +11,16 @@ public class Student {
     private Date dateOfBirth;
     private boolean sex; //1: Male, 0: Female
 
+
     public Student(int stuCode, String stuName, String homeTown, Date dateOfBirth, boolean sex){
         this.stuCode = stuCode;
         this.stuName = stuName;
         this.homeTown = homeTown;
         this.dateOfBirth = dateOfBirth;
         this.sex = sex;
+    }
+
+    public Student() {
     }
 
     public Date getDateOfBirth() {

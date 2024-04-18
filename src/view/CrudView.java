@@ -83,12 +83,37 @@ public class CrudView extends JFrame {
     }
 
     public Student info() throws ParseException{
-        int stuCode = Integer.parseInt(txtStuCode.getText());
+        int stuCode;
+        String dateOfBirthStr = txtDateOfBirth.getText();
+        String stuCodeStr = txtStuCode.getText();
+        String sexStr = txtSex.getText();
+
         String stuName = txtStuName.getText();
         String homeTown = txtHomeTown.getText();
-        Date dateOfBirth = new SimpleDateFormat("dd/MM/yyyy").parse(txtDateOfBirth.getText());
-        boolean sex = Boolean.parseBoolean(txtSex.getText());
-        Student temp = new Student(stuCode, stuName, homeTown, dateOfBirth, sex);
+        boolean sex = Boolean.parseBoolean(sexStr);
+        Student temp = qlsvModel.searchStudentById(Integer.parseInt(stuCodeStr));
+        System.out.println(temp);
+
+        if(!stuName.isEmpty()){
+            temp.setStuName(stuName);
+        }
+
+        if(!homeTown.isEmpty()){
+            temp.setHomeTown(homeTown);
+        }
+
+        if(!dateOfBirthStr.isEmpty()){
+            Date dateOfBirth = new SimpleDateFormat("dd/MM/yyyy").parse(dateOfBirthStr);
+            temp.setDateOfBirth(dateOfBirth);
+        }else {
+            temp.setDateOfBirth(temp.getDateOfBirth());
+        }
+
+        if(!sexStr.isEmpty()){
+            temp.setSex(sex);
+        }
+
+
         return temp;
     }
 

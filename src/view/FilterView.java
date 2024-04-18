@@ -60,18 +60,32 @@ public class FilterView extends JFrame {
 
     }
 
-    public void filteredStudent() throws ParseException{
+    public void filteredStudent(){
         String inputStuName = txtStuName.getText();
         String inputStuCode = txtStuCode.getText();
+        if(inputStuCode.isEmpty() && inputStuName.isEmpty()){
+            JOptionPane.showMessageDialog(this, "Vui lòng nhập MSV hoặc tên của Sinh Viên!");
+
+        }
         if(!inputStuName.isEmpty()){
             ArrayList<Student> filteredList = qlsvModel.searchStudent(txtStuName.getText());
-            qlsvModel_temp.setStuList(filteredList);
+            if(!filteredList.isEmpty()){
+                qlsvModel_temp.setStuList(filteredList);
+            }
+            else {
+                JOptionPane.showMessageDialog(this, "Thông tin sinh viên không tồn tại!");
+            }
         } else
         {
             ArrayList<Student> filteredList = new ArrayList<Student>();
             Student temp = qlsvModel.searchStudentById(Integer.parseInt(inputStuCode));
-            filteredList.add(temp);
-            qlsvModel_temp.setStuList(filteredList);
+            if(temp != null){
+                filteredList.add(temp);
+                qlsvModel_temp.setStuList(filteredList);
+            }
+            else {
+                JOptionPane.showMessageDialog(this, "Thông tin sinh viên không tồn tại!");
+            }
         }
     }
 
