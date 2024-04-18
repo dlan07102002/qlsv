@@ -16,9 +16,16 @@ public class QLSVController implements ActionListener{
     @Override
     public void actionPerformed(ActionEvent e) {
         String src = e.getActionCommand();
-        if(src.equals("Sửa") || src.equals("Thêm")){
+        if(src.equals("Thêm/Sửa/Xóa")){
             try {
                 this.qlsvView.switchToUpdateView();
+            } catch (ParseException e1) {
+                // TODO Auto-generated catch block
+                e1.printStackTrace();
+            }
+        } else if(src.equals("Lọc")){
+            try {
+                this.qlsvView.switchToFilterView();
             } catch (ParseException e1) {
                 // TODO Auto-generated catch block
                 e1.printStackTrace();

@@ -2,6 +2,7 @@ package view;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
+import javax.xml.crypto.dsig.spec.XPathType.Filter;
 
 import controller.QLSVController;
 import model.QLSVModel;
@@ -64,19 +65,13 @@ public class QLSVView extends JFrame {
         
         JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
         
-        JButton addButton = new JButton("Thêm");
-        addButton.addActionListener(qlsvController);
+        JButton crudButton = new JButton("Thêm/Sửa/Xóa");
+        crudButton.addActionListener(qlsvController);
+        buttonPanel.add(crudButton);
 
-        
-        JButton updateButton = new JButton("Sửa");
-        updateButton.addActionListener(qlsvController);
-        
-        JButton deleteButton = new JButton("Xóa");
-        
-        
-        buttonPanel.add(addButton);
-        buttonPanel.add(updateButton);
-        buttonPanel.add(deleteButton);
+        JButton filterButton = new JButton("Lọc");
+        filterButton.addActionListener(qlsvController);
+        buttonPanel.add(filterButton);
 
         JPanel_main.add(scrollPane, BorderLayout.CENTER);
         JPanel_main.add(buttonPanel, BorderLayout.SOUTH);
@@ -121,7 +116,13 @@ public class QLSVView extends JFrame {
 
     public void switchToUpdateView() throws ParseException {
         // Tạo một UpdateView mới và ẩn view hiện tại
-        UpdateView updateView = new UpdateView(qlsvModel);
+        CrudView updateView = new CrudView(qlsvModel);
+        this.setVisible(false);
+    }
+
+    public void switchToFilterView() throws ParseException {
+        // Tạo một UpdateView mới và ẩn view hiện tại
+        FilterView filterView = new FilterView(qlsvModel);
         this.setVisible(false);
     }
 }

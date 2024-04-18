@@ -8,13 +8,11 @@ import java.util.Date;
 import model.QLSVModel;
 import model.Student;
 import view.QLSVView;
-import view.UpdateView;
+import view.CrudView;
 
 public class Test {
     public static void main(String[] args) throws ParseException {
       
        new QLSVView();
-
-        // new UpdateView();
     }
 }

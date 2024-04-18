@@ -45,9 +45,9 @@ public class QLSVModel {
         this.stuList.remove(student);
     }
 
-    public void update(Student student){
-        this.stuList.remove(student);
-        this.stuList.add(student);
+    public void update(Student stuSrc, Student stuDist){
+        this.stuList.remove(stuSrc);
+        this.stuList.add(stuDist);
     }
 
     //Lọc danh sách sinh viên theo tên
@@ -75,7 +75,6 @@ public class QLSVModel {
     public boolean isStuCodeExist(int stuCode){
         for(Student i : stuList){
             if(i.getStuCode() == stuCode){
-                System.out.println("Không trùng");
                 return true;
             }
         }
