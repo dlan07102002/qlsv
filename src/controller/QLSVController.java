@@ -18,7 +18,7 @@ public class QLSVController implements ActionListener{
         String src = e.getActionCommand();
         if(src.equals("Thêm/Sửa/Xóa")){
             try {
-                this.qlsvView.switchToUpdateView();
+                this.qlsvView.switchToCrudView();
             } catch (ParseException e1) {
                 // TODO Auto-generated catch block
                 e1.printStackTrace();

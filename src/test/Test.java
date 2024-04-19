@@ -12,7 +12,7 @@ import view.CrudView;
 
 public class Test {
     public static void main(String[] args) throws ParseException {
-      
-       new QLSVView();
+       QLSVModel qlsvModel = new QLSVModel();
+       new QLSVView(qlsvModel);
     }
 }

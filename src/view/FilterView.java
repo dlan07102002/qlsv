@@ -15,15 +15,17 @@ import java.util.Date;
 
 public class FilterView extends JFrame {
     private QLSVModel qlsvModel;
-    private QLSVModel qlsvModel_temp = new QLSVModel();
+    private QLSVView qlsvView;
+    private ArrayList<Student> filteredList = new ArrayList<Student>();
 
 
     private JLabel lblStuCode, lblStuName;
     private JTextField txtStuCode, txtStuName;
     private JButton jButton_filter;
 
-    public FilterView(QLSVModel qlsvModel) throws ParseException {
+    public FilterView(QLSVModel qlsvModel, QLSVView qlsvView) throws ParseException {
         this.qlsvModel = qlsvModel;
+        this.qlsvView = qlsvView;
         init();
     }
 
@@ -68,22 +70,25 @@ public class FilterView extends JFrame {
 
         }
         if(!inputStuName.isEmpty()){
-            ArrayList<Student> filteredList = qlsvModel.searchStudent(txtStuName.getText());
+            filteredList = qlsvModel.searchStudent(txtStuName.getText());
             if(!filteredList.isEmpty()){
-                qlsvModel_temp.setStuList(filteredList);
+                this.qlsvView.setQLSVModelRender(filteredList);
             }
             else {
+                System.out.println("1");
                 JOptionPane.showMessageDialog(this, "Thông tin sinh viên không tồn tại!");
             }
         } else
         {
-            ArrayList<Student> filteredList = new ArrayList<Student>();
             Student temp = qlsvModel.searchStudentById(Integer.parseInt(inputStuCode));
             if(temp != null){
                 filteredList.add(temp);
-                qlsvModel_temp.setStuList(filteredList);
+                this.qlsvView.setQLSVModelRender(filteredList);
+
             }
             else {
+                System.out.println("3");
+
                 JOptionPane.showMessageDialog(this, "Thông tin sinh viên không tồn tại!");
             }
         }
@@ -92,8 +97,7 @@ public class FilterView extends JFrame {
 
 
     public void switchToQLSVView() throws ParseException {
-        // Tạo một UpdateView mới và ẩn view hiện tại
-        QLSVView qlsvView = new QLSVView(qlsvModel_temp);
+        this.qlsvView.setQLSVModelRender(filteredList);
         this.setVisible(false);
     }
     

@@ -23,20 +23,24 @@ public class QLSVView extends JFrame {
     private JTable table;
     private DefaultTableModel tableModel;
 
-    public QLSVView() throws ParseException {
-        this.qlsvModel = new QLSVModel();
-        initComponents();
+    public QLSVView(QLSVModel qlsvModel) throws ParseException {
+        this.qlsvModel = qlsvModel;
+        init();
         loadData();
     }
 
-    public QLSVView(QLSVModel qlsvModel) throws ParseException {
+    public void setQlsvModel(QLSVModel qlsvModel) throws ParseException {
         this.qlsvModel = qlsvModel;
-        initComponents();
+        init();
         loadData(qlsvModel);
     }
 
+    public void setQLSVModelRender(ArrayList<Student>  list){
+        init();
+        loadData(list);
+    }
 
-    private void initComponents() {
+    private void init() {
         
         this.setTitle("Quản lý sinh viên");
         this.setSize(500, 500);
@@ -62,7 +66,10 @@ public class QLSVView extends JFrame {
         tableModel.addColumn("Địa chỉ");
         tableModel.addColumn("Ngày sinh");
         // tableModel.addColumn("Giới tính");
+
         table = new JTable(tableModel);
+        table.setEnabled(false);
+
         JScrollPane scrollPane = new JScrollPane(table);
         
         
@@ -84,9 +91,6 @@ public class QLSVView extends JFrame {
     }
 
     private void loadData() throws ParseException {
-  
-        QLSVModel qlsvModel = new QLSVModel();
-     
         ArrayList<Student> students = qlsvModel.getStuList();
         for (Student student : students) {
             Object[] rowData = {
@@ -97,7 +101,6 @@ public class QLSVView extends JFrame {
                     // student.getSex()
             };
             tableModel.addRow(rowData);
-            
         }
     }
 
@@ -117,15 +120,30 @@ public class QLSVView extends JFrame {
         }
     }
 
-    public void switchToUpdateView() throws ParseException {
+    private void loadData(ArrayList<Student> list){
+        for (Student student : list) {
+            Object[] rowData = {
+                    student.getStuCode(),
+                    student.getStuName(),
+                    student.getHomeTown(),
+                    student.getDateOfBirth(),
+                    // student.getSex()
+            };
+            tableModel.addRow(rowData);
+        }
+    }
+
+
+
+    public void switchToCrudView() throws ParseException {
         // Tạo một UpdateView mới và ẩn view hiện tại
-        CrudView updateView = new CrudView(qlsvModel);
-        this.setVisible(false);
+        CrudView crudView = new CrudView(qlsvModel, this);
+        // this.setVisible(false);
     }
 
     public void switchToFilterView() throws ParseException {
         // Tạo một UpdateView mới và ẩn view hiện tại
-        FilterView filterView = new FilterView(qlsvModel);
-        this.setVisible(false);
+        FilterView filterView = new FilterView(qlsvModel, this);
+        // this.setVisible(false);
     }
 }

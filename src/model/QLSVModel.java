@@ -3,6 +3,8 @@ package model;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 
 public class QLSVModel {
     private static ArrayList<Student> stuList;
@@ -15,12 +17,16 @@ public class QLSVModel {
         Student s5 = new Student(5,"Bá Phúc", "Hải Dương", new SimpleDateFormat("dd/MM/yyyy").parse("26/11/2002") ,true);
         Student s6 = new Student(6,"Hoàng Giang", "Địa Ngục", new SimpleDateFormat("dd/MM/yyyy").parse("15/05/2002") ,true);
         this.stuList = new ArrayList<Student>();
+        
+        System.out.println("Create");
+
         this.insert(s1);
         this.insert(s2);
         this.insert(s3);
         this.insert(s4);
-        System.out.println("2");
-        this.searchStudent("Lân");
+        
+        Collections.sort(this.stuList);
+
     }
 
     public QLSVModel(ArrayList<Student> stuList){

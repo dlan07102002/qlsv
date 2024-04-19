@@ -14,13 +14,15 @@ import java.util.Date;
 
 public class CrudView extends JFrame {
     private QLSVModel qlsvModel;
+    private QLSVView qlsvView;
 
     private JLabel lblStuCode, lblStuName, lblHomeTown, lblDateOfBirth, lblSex;
     private JTextField txtStuCode, txtStuName, txtHomeTown, txtDateOfBirth, txtSex;
     private JButton jButton_save, jButton_create, jButton_delete;
 
-    public CrudView(QLSVModel qlsvModel) throws ParseException {
+    public CrudView(QLSVModel qlsvModel, QLSVView qlsvView) throws ParseException {
         this.qlsvModel = qlsvModel;
+        this.qlsvView = qlsvView;
         init();
     }
 
@@ -77,13 +79,12 @@ public class CrudView extends JFrame {
         this.add(jPanel_center, BorderLayout.CENTER);
         this.add(jPanel_footer, BorderLayout.SOUTH);
 
-
         this.setVisible(true);
 
     }
 
     public Student info() throws ParseException{
-        int stuCode;
+        int stuCode = Integer.parseInt(txtStuCode.getText());
         String dateOfBirthStr = txtDateOfBirth.getText();
         String stuCodeStr = txtStuCode.getText();
         String sexStr = txtSex.getText();
@@ -92,27 +93,27 @@ public class CrudView extends JFrame {
         String homeTown = txtHomeTown.getText();
         boolean sex = Boolean.parseBoolean(sexStr);
         Student temp = qlsvModel.searchStudentById(Integer.parseInt(stuCodeStr));
-        System.out.println(temp);
+
+        if(temp == null){
+            temp = new Student(stuCode, stuName, homeTown, new SimpleDateFormat("dd/MM/yyyy").parse(dateOfBirthStr), sex);
+        }
 
         if(!stuName.isEmpty()){
             temp.setStuName(stuName);
-        }
+        } 
 
         if(!homeTown.isEmpty()){
             temp.setHomeTown(homeTown);
-        }
+        } 
 
         if(!dateOfBirthStr.isEmpty()){
             Date dateOfBirth = new SimpleDateFormat("dd/MM/yyyy").parse(dateOfBirthStr);
             temp.setDateOfBirth(dateOfBirth);
-        }else {
-            temp.setDateOfBirth(temp.getDateOfBirth());
         }
 
         if(!sexStr.isEmpty()){
             temp.setSex(sex);
-        }
-
+        } 
 
         return temp;
     }
@@ -122,8 +123,8 @@ public class CrudView extends JFrame {
         if( qlsvModel.isStuCodeExist(temp.getStuCode()) || qlsvModel.isStudentExist(temp) ){
             Student stuChange = qlsvModel.searchStudentById(temp.getStuCode());
             qlsvModel.update(stuChange, temp);
+            this.setVisible(false);
             JOptionPane.showMessageDialog(this, "Thông tin sinh viên đã được cập nhật thành công!");
-
         }
         else {
             qlsvModel.insert(temp);
@@ -138,6 +139,9 @@ public class CrudView extends JFrame {
         }
         else {
             qlsvModel.insert(temp);
+
+            System.out.println(qlsvModel.getStuList());
+            this.setVisible(false);
             JOptionPane.showMessageDialog(this, "Thông tin sinh viên đã được thêm thành công!");
         }
     }
@@ -147,6 +151,7 @@ public class CrudView extends JFrame {
         Student delStu = qlsvModel.searchStudentById(delStuCode);
         if(qlsvModel.isStudentExist(delStu)){
             qlsvModel.delete(delStu);
+            this.setVisible(false);
             JOptionPane.showMessageDialog(this, "Sinh viên: " + delStu.getStuName()+  " đã được xóa khỏi danh sách!");
         }else{
             JOptionPane.showMessageDialog(this, "Thông tin sinh viên không tồn tại, không thể xóa!");
@@ -156,8 +161,9 @@ public class CrudView extends JFrame {
     
     public void switchToQLSVView() throws ParseException {
         // Tạo một UpdateView mới và ẩn view hiện tại
-        QLSVView qlsvView = new QLSVView(qlsvModel);
-        this.setVisible(false);
+        System.out.println(qlsvModel.getStuList());
+        qlsvView.setQlsvModel(qlsvModel);
+        // this.setVisible(false);
     }
     
 }

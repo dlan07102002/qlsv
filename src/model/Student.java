@@ -4,7 +4,7 @@ import java.util.Date;
 import java.util.Objects;
 
 
-public class Student {
+public class Student implements Comparable<Student> {
     private int stuCode;
     private String stuName;
     private String homeTown;
@@ -20,7 +20,7 @@ public class Student {
         this.sex = sex;
     }
 
-    public Student() {
+    public Student()  {
     }
 
     public Date getDateOfBirth() {
@@ -88,6 +88,17 @@ public class Student {
                 Objects.equals(stuName, student.stuName) &&
                 Objects.equals(homeTown, student.homeTown) &&
                 Objects.equals(dateOfBirth, student.dateOfBirth);
+    }
+
+    @Override
+    public int compareTo(Student o) {
+        if(this.getStuCode() > o.getStuCode()){
+            return 1;
+        }
+        else if(this.getStuCode() == o.getStuCode()){
+            return 0;
+        }
+        else return -1;
     }
 
 }
