@@ -32,7 +32,7 @@ public class FilterView extends JFrame {
     private void init() {
         this.setLayout(new BorderLayout());
         this.setSize(400, 150);
-        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        // this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setLocationRelativeTo(null);
 
 
@@ -66,6 +66,7 @@ public class FilterView extends JFrame {
         String inputStuName = txtStuName.getText();
         String inputStuCode = txtStuCode.getText();
         if(inputStuCode.isEmpty() && inputStuName.isEmpty()){
+            filteredList = qlsvModel.getStuList();
             JOptionPane.showMessageDialog(this, "Vui lòng nhập MSV hoặc tên của Sinh Viên!");
 
         }

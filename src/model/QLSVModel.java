@@ -14,8 +14,7 @@ public class QLSVModel {
         Student s2 = new Student(2,"Bá Phúc", "Hải Dương", new SimpleDateFormat("dd/MM/yyyy").parse("26/11/2002") ,true);
         Student s3 = new Student(3,"Hoàng Giang", "Địa Ngục", new SimpleDateFormat("dd/MM/yyyy").parse("15/05/2002") ,true);
         Student s4 = new Student(4,"Bạch Lân", "Hà Nội", new SimpleDateFormat("dd/MM/yyyy").parse("07/10/2002") ,true);
-        Student s5 = new Student(5,"Bá Phúc", "Hải Dương", new SimpleDateFormat("dd/MM/yyyy").parse("26/11/2002") ,true);
-        Student s6 = new Student(6,"Hoàng Giang", "Địa Ngục", new SimpleDateFormat("dd/MM/yyyy").parse("15/05/2002") ,true);
+     
         this.stuList = new ArrayList<Student>();
         
         System.out.println("Create");
@@ -24,6 +23,8 @@ public class QLSVModel {
         this.insert(s2);
         this.insert(s3);
         this.insert(s4);
+   
+ 
         
         Collections.sort(this.stuList);
 

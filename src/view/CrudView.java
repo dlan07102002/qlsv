@@ -29,7 +29,7 @@ public class CrudView extends JFrame {
     private void init() {
         this.setLayout(new BorderLayout());
         this.setSize(400, 300);
-        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        // this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setLocationRelativeTo(null);
 
 
@@ -162,7 +162,7 @@ public class CrudView extends JFrame {
     public void switchToQLSVView() throws ParseException {
         // Tạo một UpdateView mới và ẩn view hiện tại
         System.out.println(qlsvModel.getStuList());
-        qlsvView.setQlsvModel(qlsvModel);
+        this.qlsvView.setQlsvModel(qlsvModel);
         // this.setVisible(false);
     }
     

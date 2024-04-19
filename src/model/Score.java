@@ -7,7 +7,8 @@ public class Score {
     private double cheScore = 0;
     private double total = 0;
 
-    public Score(double matScore, double phyScore, double cheScore){
+    public Score(int stuCode, double matScore, double phyScore, double cheScore){
+        this.stuCode = stuCode;
         this.matScore = matScore;
         this.phyScore = phyScore;
         this.cheScore = cheScore;
@@ -46,6 +47,16 @@ public class Score {
         return stuCode;
     }
     
+    public double getTotal() {
+        return total;
+    }
 
+    public String classification(){
+        if(this.total >= 24){
+            return "Giỏi";
+        }else if(this.total >= 15){
+            return "Khá";
+        } else return "Trung Bình Yếu";
+    }
 
 }

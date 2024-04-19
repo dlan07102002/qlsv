@@ -1,11 +1,14 @@
 package view;
 
 import javax.swing.*;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 import javax.xml.crypto.dsig.spec.XPathType.Filter;
 
 import controller.QLSVController;
 import model.QLSVModel;
+import model.ScoreModel;
 import model.Student;
 
 
@@ -20,11 +23,19 @@ public class QLSVView extends JFrame {
     SimpleDateFormat dF = new SimpleDateFormat("dd-MM-yyyy");
 
     private static QLSVModel qlsvModel;
-    private JTable table;
-    private DefaultTableModel tableModel;
+    private static ScoreModel scoreModel;
+    private DefaultTableModel tableModel ;
 
-    public QLSVView(QLSVModel qlsvModel) throws ParseException {
+
+    private JTable table ;
+
+    public JTable getTable() {
+        return table;
+    }
+
+    public QLSVView(QLSVModel qlsvModel, ScoreModel scoreModel) throws ParseException {
         this.qlsvModel = qlsvModel;
+        this.scoreModel = scoreModel;
         init();
         loadData();
     }
@@ -47,7 +58,7 @@ public class QLSVView extends JFrame {
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setLocationRelativeTo(null);
 
-        Font sansSerifFont = new Font("SansSerif", Font.PLAIN, 12);
+        // Font sansSerifFont = new Font("SansSerif", Font.PLAIN, 12);
 
         JPanel JPanel_main = new JPanel(new BorderLayout());
         
@@ -59,7 +70,15 @@ public class QLSVView extends JFrame {
         // JLabel jLabel_header = new JLabel("");
 
         // Center
-        tableModel = new DefaultTableModel();
+        tableModel = new DefaultTableModel()
+        {
+            // Không cho phép chỉnh sửa các ô
+            public boolean isCellEditable(int row, int column) {
+                return false; 
+            }
+        };
+
+        table = new JTable(tableModel);
         
         tableModel.addColumn("Mã sinh viên");
         tableModel.addColumn("Tên sinh viên");
@@ -67,8 +86,10 @@ public class QLSVView extends JFrame {
         tableModel.addColumn("Ngày sinh");
         // tableModel.addColumn("Giới tính");
 
-        table = new JTable(tableModel);
-        table.setEnabled(false);
+
+        
+
+        table.getSelectionModel().addListSelectionListener(qlsvController.getMouseListener());
 
         JScrollPane scrollPane = new JScrollPane(table);
         
@@ -82,6 +103,10 @@ public class QLSVView extends JFrame {
         JButton filterButton = new JButton("Lọc");
         filterButton.addActionListener(qlsvController);
         buttonPanel.add(filterButton);
+
+        JButton scoreButton = new JButton("Bảng điểm");
+        scoreButton.addActionListener(qlsvController);
+        buttonPanel.add(scoreButton);
 
         JPanel_main.add(scrollPane, BorderLayout.CENTER);
         JPanel_main.add(buttonPanel, BorderLayout.SOUTH);
@@ -104,15 +129,15 @@ public class QLSVView extends JFrame {
         }
     }
 
-    private void loadData(QLSVModel qlsvModel) throws ParseException {
+    private void loadData(QLSVModel qlsvModel_o) throws ParseException {
      
-        ArrayList<Student> students = qlsvModel.getStuList();
+        ArrayList<Student> students = qlsvModel_o.getStuList();
         for (Student student : students) {
             Object[] rowData = {
                     student.getStuCode(),
                     student.getStuName(),
                     student.getHomeTown(),
-                    student.getDateOfBirth(),
+                    dF.format(student.getDateOfBirth()),
                     // student.getSex()
             };
             tableModel.addRow(rowData);
@@ -126,7 +151,7 @@ public class QLSVView extends JFrame {
                     student.getStuCode(),
                     student.getStuName(),
                     student.getHomeTown(),
-                    student.getDateOfBirth(),
+                    dF.format(student.getDateOfBirth()),
                     // student.getSex()
             };
             tableModel.addRow(rowData);
@@ -136,14 +161,21 @@ public class QLSVView extends JFrame {
 
 
     public void switchToCrudView() throws ParseException {
-        // Tạo một UpdateView mới và ẩn view hiện tại
+        // Tạo một crudView mới 
         CrudView crudView = new CrudView(qlsvModel, this);
         // this.setVisible(false);
     }
 
     public void switchToFilterView() throws ParseException {
-        // Tạo một UpdateView mới và ẩn view hiện tại
+        // Tạo một Filter View mới
         FilterView filterView = new FilterView(qlsvModel, this);
         // this.setVisible(false);
     }
+
+    public void switchToScoreView() throws ParseException {
+        // Tạo một Filter View mới
+        ScoreView scoreView = new ScoreView(scoreModel);
+        // this.setVisible(false);
+    }
+
 }

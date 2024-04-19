@@ -10,6 +10,7 @@ public class Student implements Comparable<Student> {
     private String homeTown;
     private Date dateOfBirth;
     private boolean sex; //1: Male, 0: Female
+    private Score scoreTable;
 
 
     public Student(int stuCode, String stuName, String homeTown, Date dateOfBirth, boolean sex){
@@ -18,6 +19,15 @@ public class Student implements Comparable<Student> {
         this.homeTown = homeTown;
         this.dateOfBirth = dateOfBirth;
         this.sex = sex;
+    }
+
+    public Student(int stuCode, String stuName, String homeTown, Date dateOfBirth, boolean sex, Score scoreTable){
+        this.stuCode = stuCode;
+        this.stuName = stuName;
+        this.homeTown = homeTown;
+        this.dateOfBirth = dateOfBirth;
+        this.sex = sex;
+        this.scoreTable = scoreTable;
     }
 
     public Student()  {
