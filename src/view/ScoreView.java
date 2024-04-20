@@ -51,7 +51,7 @@ public class ScoreView extends JFrame {
     private void init() {
         
         this.setTitle("Bảng điểm sinh viên");
-        this.setSize(500, 500);
+        this.setSize(800, 500);
         this.setLocationRelativeTo(null);
 
         // Font sansSerifFont = new Font("SansSerif", Font.PLAIN, 12);

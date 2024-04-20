@@ -2,25 +2,21 @@ package model;
 
 import java.util.ArrayList;
 
+import dao.ScoreModelDAO;
+
 public class ScoreModel {
-    private static ArrayList<Score> scoreList;
+    private static ArrayList<Score> scoreList = new ArrayList<Score>();
 
     public ScoreModel(){
-        Score s1 = new Score(1, 10 ,10, 10);
-        Score s2 = new Score(2, 8 ,10, 10);
-        Score s4 = new Score(4, 1 ,1, 1);
-
-
-
-        this.scoreList = new ArrayList<Score>();
+           
+        try {
+            ArrayList<Score> list = ScoreModelDAO.getInstance().selectAll();
+            this.setScoreList(list);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
         System.out.println("Created score");
-        this.insert(s1);
-        this.insert(s2);
-        this.insert(s4);
-
-
-
-
+    
     }
 
     public void setScoreList(ArrayList<Score> scoreList) {

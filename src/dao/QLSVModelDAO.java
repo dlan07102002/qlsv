@@ -31,7 +31,7 @@ public class QLSVModelDAO implements DAOInterface<Student> {
             int res = st.executeUpdate(sql);
                         
             System.out.println("Ban da thuc thi " + sql);
-            System.out.println("Có" + res +  "dòng thay đổi");
+            System.out.println("Có " + res +  " dòng thay đổi");
 
             JDBCUtil.closeConnection(con);
 
@@ -60,7 +60,7 @@ public class QLSVModelDAO implements DAOInterface<Student> {
             int res = st.executeUpdate(sql);
                         
             System.out.println("Ban da thuc thi " + sql);
-            System.out.println("Có" + res +  "dòng thay đổi");
+            System.out.println("Có " + res +  " dòng thay đổi");
 
             JDBCUtil.closeConnection(con);
 
@@ -86,7 +86,7 @@ public class QLSVModelDAO implements DAOInterface<Student> {
             int res = st.executeUpdate(sql);
                         
             System.out.println("Ban da thuc thi " + sql);
-            System.out.println("Có" + res +  "dòng thay đổi");
+            System.out.println("Có " + res +  " dòng thay đổi");
 
             JDBCUtil.closeConnection(con);
 

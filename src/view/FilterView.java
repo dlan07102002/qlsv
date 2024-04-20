@@ -67,9 +67,11 @@ public class FilterView extends JFrame {
         String inputStuCode = txtStuCode.getText();
         if(inputStuCode.isEmpty() && inputStuName.isEmpty()){
             filteredList = qlsvModel.getStuList();
+            this.qlsvView.setQLSVModelRender(filteredList);
             JOptionPane.showMessageDialog(this, "Vui lòng nhập MSV hoặc tên của Sinh Viên!");
 
         }
+        else
         if(!inputStuName.isEmpty()){
             filteredList = qlsvModel.searchStudent(txtStuName.getText());
             if(!filteredList.isEmpty()){
@@ -85,7 +87,6 @@ public class FilterView extends JFrame {
             if(temp != null){
                 filteredList.add(temp);
                 this.qlsvView.setQLSVModelRender(filteredList);
-
             }
             else {
                 System.out.println("3");
@@ -94,8 +95,6 @@ public class FilterView extends JFrame {
             }
         }
     }
-
-
 
     public void switchToQLSVView() throws ParseException {
         this.qlsvView.setQLSVModelRender(filteredList);

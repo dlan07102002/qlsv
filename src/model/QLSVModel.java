@@ -10,7 +10,7 @@ import java.util.Collections;
 import dao.QLSVModelDAO;
 
 public class QLSVModel {
-    private static ArrayList<Student> stuList = new ArrayList<Student>();;
+    private static ArrayList<Student> stuList = new ArrayList<Student>();
     
     public QLSVModel() throws ParseException{
         
@@ -42,12 +42,14 @@ public class QLSVModel {
 
     //Các tính năng thêm, sửa, xóa sinh viên
     public void insert(Student student){
-        // this.stuList.add(student);
+        this.stuList.add(student);
         QLSVModelDAO.getInstance().insert(student);
     }
 
     public void delete(Student student){
         this.stuList.remove(student);
+        QLSVModelDAO.getInstance().drop(student);
+
     }
 
     public void update(Student stuSrc, Student stuDist){
