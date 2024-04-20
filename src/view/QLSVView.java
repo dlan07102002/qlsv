@@ -20,7 +20,7 @@ import java.util.ArrayList;
 
 public class QLSVView extends JFrame {
 
-    SimpleDateFormat dF = new SimpleDateFormat("dd-MM-yyyy");
+    SimpleDateFormat sdf1 = new SimpleDateFormat("dd/MM/yyyy");
 
     private static QLSVModel qlsvModel;
     private static ScoreModel scoreModel;
@@ -122,7 +122,7 @@ public class QLSVView extends JFrame {
                     student.getStuCode(),
                     student.getStuName(),
                     student.getHomeTown(),
-                    dF.format(student.getDateOfBirth()),
+                    student.getDateOfBirth(),
                     // student.getSex()
             };
             tableModel.addRow(rowData);
@@ -137,7 +137,7 @@ public class QLSVView extends JFrame {
                     student.getStuCode(),
                     student.getStuName(),
                     student.getHomeTown(),
-                    dF.format(student.getDateOfBirth()),
+                    student.getDateOfBirth(),
                     // student.getSex()
             };
             tableModel.addRow(rowData);
@@ -146,12 +146,13 @@ public class QLSVView extends JFrame {
     }
 
     private void loadData(ArrayList<Student> list){
+        
         for (Student student : list) {
             Object[] rowData = {
                     student.getStuCode(),
                     student.getStuName(),
                     student.getHomeTown(),
-                    dF.format(student.getDateOfBirth()),
+                    student.getDateOfBirth(),
                     // student.getSex()
             };
             tableModel.addRow(rowData);
@@ -174,7 +175,7 @@ public class QLSVView extends JFrame {
 
     public void switchToScoreView() throws ParseException {
         // Tạo một Filter View mới
-        ScoreView scoreView = new ScoreView(scoreModel);
+        ScoreView scoreView = new ScoreView(qlsvModel, scoreModel);
         // this.setVisible(false);
     }
 

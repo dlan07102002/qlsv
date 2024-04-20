@@ -10,14 +10,14 @@ import java.awt.*;
 import java.awt.event.*;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.sql.Date;
 
 public class CrudView extends JFrame {
     private QLSVModel qlsvModel;
     private QLSVView qlsvView;
 
-    private JLabel lblStuCode, lblStuName, lblHomeTown, lblDateOfBirth, lblSex;
-    private JTextField txtStuCode, txtStuName, txtHomeTown, txtDateOfBirth, txtSex;
+    private JLabel lblStuCode, lblStuName, lblHomeTown, lblDateOfBirth, lblGender;
+    private JTextField txtStuCode, txtStuName, txtHomeTown, txtDateOfBirth, txtGender;
     private JButton jButton_save, jButton_create, jButton_delete;
 
     public CrudView(QLSVModel qlsvModel, QLSVView qlsvView) throws ParseException {
@@ -42,8 +42,8 @@ public class CrudView extends JFrame {
         txtHomeTown = new JTextField();
         lblDateOfBirth = new JLabel("Ngày sinh:");
         txtDateOfBirth = new JTextField();
-        lblSex = new JLabel("Giới tính:");
-        txtSex = new JTextField();
+        lblGender = new JLabel("Giới tính:");
+        txtGender = new JTextField();
 
         CrudController crudController = new CrudController(this);
         
@@ -73,8 +73,8 @@ public class CrudView extends JFrame {
         jPanel_center.add(txtHomeTown);
         jPanel_center.add(lblDateOfBirth);
         jPanel_center.add(txtDateOfBirth);
-        jPanel_center.add(lblSex);
-        jPanel_center.add(txtSex);
+        jPanel_center.add(lblGender);
+        jPanel_center.add(txtGender);
 
         this.add(jPanel_center, BorderLayout.CENTER);
         this.add(jPanel_footer, BorderLayout.SOUTH);
@@ -87,15 +87,19 @@ public class CrudView extends JFrame {
         int stuCode = Integer.parseInt(txtStuCode.getText());
         String dateOfBirthStr = txtDateOfBirth.getText();
         String stuCodeStr = txtStuCode.getText();
-        String sexStr = txtSex.getText();
+        String genderStr = txtGender.getText();
 
         String stuName = txtStuName.getText();
         String homeTown = txtHomeTown.getText();
-        boolean sex = Boolean.parseBoolean(sexStr);
+        boolean gender = Boolean.parseBoolean(genderStr);
         Student temp = qlsvModel.searchStudentById(Integer.parseInt(stuCodeStr));
 
         if(temp == null){
-            temp = new Student(stuCode, stuName, homeTown, new SimpleDateFormat("dd/MM/yyyy").parse(dateOfBirthStr), sex);
+            String startDate=dateOfBirthStr;
+            SimpleDateFormat sdf1 = new SimpleDateFormat("dd/MM/yyyy");
+            java.util.Date date = sdf1.parse(startDate);
+            java.sql.Date sqlDate = new java.sql.Date(date.getTime()); 
+            temp = new Student(stuCode, stuName, homeTown, sqlDate, gender);
         }
 
         if(!stuName.isEmpty()){
@@ -107,12 +111,16 @@ public class CrudView extends JFrame {
         } 
 
         if(!dateOfBirthStr.isEmpty()){
-            Date dateOfBirth = new SimpleDateFormat("dd/MM/yyyy").parse(dateOfBirthStr);
+            String startDate=dateOfBirthStr;
+            SimpleDateFormat sdf1 = new SimpleDateFormat("dd/MM/yyyy");
+            java.util.Date date = sdf1.parse(startDate);
+            java.sql.Date sqlDate = new java.sql.Date(date.getTime()); 
+            Date dateOfBirth = sqlDate;
             temp.setDateOfBirth(dateOfBirth);
         }
 
-        if(!sexStr.isEmpty()){
-            temp.setSex(sex);
+        if(!genderStr.isEmpty()){
+            temp.setGender(gender);
         } 
 
         return temp;

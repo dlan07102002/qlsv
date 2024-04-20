@@ -56,7 +56,7 @@ public class Score {
             return "Giỏi";
         }else if(this.total >= 15){
             return "Khá";
-        } else return "Trung Bình Yếu";
+        } else return "Bốc cứt";
     }
 
 }

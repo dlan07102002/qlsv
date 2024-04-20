@@ -1,31 +1,28 @@
 package model;
 
+import java.sql.Date;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 
+import dao.QLSVModelDAO;
+
 public class QLSVModel {
-    private static ArrayList<Student> stuList;
-
+    private static ArrayList<Student> stuList = new ArrayList<Student>();;
+    
     public QLSVModel() throws ParseException{
-        Student s1 = new Student(1,"Đức Lân", "Hà Nội", new SimpleDateFormat("dd/MM/yyyy").parse("07/10/2002") ,true);
-        Student s2 = new Student(2,"Bá Phúc", "Hải Dương", new SimpleDateFormat("dd/MM/yyyy").parse("26/11/2002") ,true);
-        Student s3 = new Student(3,"Hoàng Giang", "Địa Ngục", new SimpleDateFormat("dd/MM/yyyy").parse("15/05/2002") ,true);
-        Student s4 = new Student(4,"Bạch Lân", "Hà Nội", new SimpleDateFormat("dd/MM/yyyy").parse("07/10/2002") ,true);
-     
-        this.stuList = new ArrayList<Student>();
         
+        try {
+            ArrayList<Student> list = QLSVModelDAO.getInstance().selectAll();
+            this.setStuList(list);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
         System.out.println("Create");
-
-        this.insert(s1);
-        this.insert(s2);
-        this.insert(s3);
-        this.insert(s4);
-   
- 
         
+
         Collections.sort(this.stuList);
 
     }

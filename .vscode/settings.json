@@ -2,6 +2,8 @@
     "java.project.sourcePaths": ["src"],
     "java.project.outputPath": "bin",
     "java.project.referencedLibraries": [
-        "lib/**/*.jar"
+        "lib/**/*.jar",
+        "bin/lib/mysql-connector-java-8.0.30.jar",
+        "bin/lib/protobuf-java-3.19.4.jar"
     ]
 }

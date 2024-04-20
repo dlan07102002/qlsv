@@ -1,6 +1,6 @@
 package model;
 
-import java.util.Date;
+import java.sql.Date;
 import java.util.Objects;
 
 
@@ -9,24 +9,24 @@ public class Student implements Comparable<Student> {
     private String stuName;
     private String homeTown;
     private Date dateOfBirth;
-    private boolean sex; //1: Male, 0: Female
+    private boolean gender; //1: Male, 0: Female
     private Score scoreTable;
 
 
-    public Student(int stuCode, String stuName, String homeTown, Date dateOfBirth, boolean sex){
+    public Student(int stuCode, String stuName, String homeTown, Date dateOfBirth, boolean gender){
         this.stuCode = stuCode;
         this.stuName = stuName;
         this.homeTown = homeTown;
         this.dateOfBirth = dateOfBirth;
-        this.sex = sex;
+        this.gender = gender;
     }
 
-    public Student(int stuCode, String stuName, String homeTown, Date dateOfBirth, boolean sex, Score scoreTable){
+    public Student(int stuCode, String stuName, String homeTown, Date dateOfBirth, boolean gender, Score scoreTable){
         this.stuCode = stuCode;
         this.stuName = stuName;
         this.homeTown = homeTown;
         this.dateOfBirth = dateOfBirth;
-        this.sex = sex;
+        this.gender = gender;
         this.scoreTable = scoreTable;
     }
 
@@ -49,8 +49,8 @@ public class Student implements Comparable<Student> {
         return stuName;
     }
 
-    public boolean getSex(){
-        return sex;
+    public boolean getGender(){
+        return gender;
     }
 
     public void setDateOfBirth(Date dateOfBirth) {
@@ -61,8 +61,8 @@ public class Student implements Comparable<Student> {
         this.homeTown = homeTown;
     }
 
-    public void setSex(boolean sex) {
-        this.sex = sex;
+    public void setGender(boolean gender) {
+        this.gender = gender;
     }
 
     public void setStuCode(int stuCode) {
@@ -80,13 +80,13 @@ public class Student implements Comparable<Student> {
             +"- Student Code: " + stuCode + "\n"
             +"- Date of Birth: " + dateOfBirth + "\n"
             +"- Home Town: " + homeTown + "\n"
-            +"- Sex: " + sex + "\n";
+            +"- Gender: " + gender + "\n";
     }
 
    
     public int hashCode() {
         // TODO Auto-generated method stub
-        return Objects.hash(stuCode,sex,stuName, homeTown, dateOfBirth);
+        return Objects.hash(stuCode,gender,stuName, homeTown, dateOfBirth);
     }
 
     public boolean equals(Object o) {
@@ -94,7 +94,7 @@ public class Student implements Comparable<Student> {
         if (o == null || getClass() != o.getClass()) return false;
         Student student = (Student) o;
         return stuCode == student.stuCode &&
-                sex == student.sex &&
+                gender == student.gender &&
                 Objects.equals(stuName, student.stuName) &&
                 Objects.equals(homeTown, student.homeTown) &&
                 Objects.equals(dateOfBirth, student.dateOfBirth);

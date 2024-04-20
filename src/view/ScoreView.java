@@ -20,6 +20,7 @@ import java.util.ArrayList;
 
 
 public class ScoreView extends JFrame {
+    private static QLSVModel qlsvModel;
     private static ScoreModel scoreModel;
     private DefaultTableModel tableModel ;
 
@@ -29,8 +30,9 @@ public class ScoreView extends JFrame {
         return table;
     }
 
-    public ScoreView(ScoreModel scoreModel) throws ParseException {
-        ScoreView.scoreModel = scoreModel;
+    public ScoreView(QLSVModel qlsvModel, ScoreModel scoreModel) throws ParseException {
+        this.qlsvModel = qlsvModel;
+        this.scoreModel = scoreModel;
         init();
         loadData();
     }
@@ -71,10 +73,14 @@ public class ScoreView extends JFrame {
         table = new JTable(tableModel);
         
         tableModel.addColumn("Mã sinh viên");
+        tableModel.addColumn("Tên sinh viên");
+
         tableModel.addColumn("Điểm toán");
         tableModel.addColumn("Điểm Lý");
         tableModel.addColumn("Điểm Hóa");   
-        tableModel.addColumn("Tổng điểm");        
+        tableModel.addColumn("Tổng điểm");      
+        tableModel.addColumn("Xếp loại");        
+
 
 
         JScrollPane scrollPane = new JScrollPane(table);
@@ -97,14 +103,18 @@ public class ScoreView extends JFrame {
     private void loadData() throws ParseException {
         ArrayList<Score> scores = scoreModel.getScoreList();
         for (Score score : scores) {
-            Object[] rowData = {
-                  score.getStuCode(),
-                  score.getMatScore(),
-                  score.getPhyScore(),
-                  score.getCheScore(),
-                  score.getTotal()
-            };
-            tableModel.addRow(rowData);
+            if(qlsvModel.searchStudentById(score.getStuCode()) != null){
+                Object[] rowData = {
+                    score.getStuCode(),
+                    qlsvModel.searchStudentById(score.getStuCode()).getStuName(),
+                    score.getMatScore(),
+                    score.getPhyScore(),
+                    score.getCheScore(),
+                    score.getTotal(),
+                    score.classification()
+                };
+                tableModel.addRow(rowData);
+            }
         }
     }
 
@@ -114,10 +124,13 @@ public class ScoreView extends JFrame {
         for (Score score : scores) {
             Object[] rowData = {
                   score.getStuCode(),
+                  qlsvModel.searchStudentById(score.getStuCode()).getStuName(),
                   score.getMatScore(),
                   score.getPhyScore(),
                   score.getCheScore(),
-                  score.getTotal()
+                  score.getTotal(),
+                  score.classification()
+
             };
             tableModel.addRow(rowData);
         }
@@ -127,26 +140,16 @@ public class ScoreView extends JFrame {
         for (Score score : list) {
             Object[] rowData = {
                 score.getStuCode(),
+                qlsvModel.searchStudentById(score.getStuCode()).getStuName(),
                 score.getMatScore(),
                 score.getPhyScore(),
                 score.getCheScore(),
-                score.getTotal()
+                score.getTotal(),
+                score.classification()
+
             };
             tableModel.addRow(rowData);
         }
     }
 
-
-
-    // public void switchToCrudView() throws ParseException {
-    //     // Tạo một crudView mới 
-    //     CrudView crudView = new CrudView(qlsvModel, this);
-    //     // this.setVisible(false);
-    // }
-
-    // public void switchToFilterView() throws ParseException {
-    //     // Tạo một Filter View mới
-    //     FilterView filterView = new FilterView(qlsvModel, this);
-    //     // this.setVisible(false);
-    // }
 }
