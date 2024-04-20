@@ -42,7 +42,8 @@ public class QLSVModel {
 
     //Các tính năng thêm, sửa, xóa sinh viên
     public void insert(Student student){
-        this.stuList.add(student);
+        // this.stuList.add(student);
+        QLSVModelDAO.getInstance().insert(student);
     }
 
     public void delete(Student student){
@@ -50,8 +51,10 @@ public class QLSVModel {
     }
 
     public void update(Student stuSrc, Student stuDist){
-        this.stuList.remove(stuSrc);
-        this.stuList.add(stuDist);
+        stuSrc.setStuName(stuDist.getStuName());
+        stuSrc.setHomeTown(stuDist.getHomeTown());
+        stuSrc.setDateOfBirth(stuDist.getDateOfBirth());
+        stuSrc.setGender(stuDist.getGender());
     }
 
     //Lọc danh sách sinh viên theo tên

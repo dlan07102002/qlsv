@@ -83,51 +83,54 @@ public class CrudView extends JFrame {
 
     }
 
-    public Student info() throws ParseException{
+    public Student info(String type) throws ParseException{
         int stuCode = Integer.parseInt(txtStuCode.getText());
         String dateOfBirthStr = txtDateOfBirth.getText();
-        String stuCodeStr = txtStuCode.getText();
         String genderStr = txtGender.getText();
 
         String stuName = txtStuName.getText();
         String homeTown = txtHomeTown.getText();
         boolean gender = Boolean.parseBoolean(genderStr);
-        Student temp = qlsvModel.searchStudentById(Integer.parseInt(stuCodeStr));
+        Student temp = qlsvModel.searchStudentById(stuCode);
 
-        if(temp == null){
-            String startDate=dateOfBirthStr;
-            SimpleDateFormat sdf1 = new SimpleDateFormat("dd/MM/yyyy");
-            java.util.Date date = sdf1.parse(startDate);
-            java.sql.Date sqlDate = new java.sql.Date(date.getTime()); 
-            temp = new Student(stuCode, stuName, homeTown, sqlDate, gender);
+        if(type == "created"){
+            if(temp == null){
+                    String startDate=dateOfBirthStr;
+                    SimpleDateFormat sdf1 = new SimpleDateFormat("dd/MM/yyyy");
+                    java.util.Date date = sdf1.parse(startDate);
+                    java.sql.Date sqlDate = new java.sql.Date(date.getTime()); 
+                    Date dateOfBirth = sqlDate;
+                temp = new Student(stuCode, stuName, homeTown, sqlDate, gender);
+            }
         }
+        else if(type == "updated"){
+            if(!stuName.isEmpty()){
+                temp.setStuName(stuName);
+            } 
 
-        if(!stuName.isEmpty()){
-            temp.setStuName(stuName);
-        } 
+            if(!homeTown.isEmpty()){
+                temp.setHomeTown(homeTown);
+            } 
 
-        if(!homeTown.isEmpty()){
-            temp.setHomeTown(homeTown);
-        } 
+            if(!dateOfBirthStr.isEmpty()){
+                String startDate=dateOfBirthStr;
+                SimpleDateFormat sdf1 = new SimpleDateFormat("dd/MM/yyyy");
+                java.util.Date date = sdf1.parse(startDate);
+                java.sql.Date sqlDate = new java.sql.Date(date.getTime()); 
+                Date dateOfBirth = sqlDate;
+                temp.setDateOfBirth(dateOfBirth);
+            }
 
-        if(!dateOfBirthStr.isEmpty()){
-            String startDate=dateOfBirthStr;
-            SimpleDateFormat sdf1 = new SimpleDateFormat("dd/MM/yyyy");
-            java.util.Date date = sdf1.parse(startDate);
-            java.sql.Date sqlDate = new java.sql.Date(date.getTime()); 
-            Date dateOfBirth = sqlDate;
-            temp.setDateOfBirth(dateOfBirth);
+            if(!genderStr.isEmpty()){
+                temp.setGender(gender);
+            } 
         }
-
-        if(!genderStr.isEmpty()){
-            temp.setGender(gender);
-        } 
-
+        
         return temp;
     }
 
     public void saveUpdatedStudentData() throws ParseException  {
-        Student temp = this.info();
+        Student temp = this.info("updated");
         if( qlsvModel.isStuCodeExist(temp.getStuCode()) || qlsvModel.isStudentExist(temp) ){
             Student stuChange = qlsvModel.searchStudentById(temp.getStuCode());
             qlsvModel.update(stuChange, temp);
@@ -141,13 +144,12 @@ public class CrudView extends JFrame {
     }
 
     public void saveCreatedStudentData() throws ParseException  {
-        Student temp = this.info();
-        if( qlsvModel.isStuCodeExist(temp.getStuCode()) || qlsvModel.isStudentExist(temp) ){
+        Student temp = this.info("created");
+        if( qlsvModel.isStuCodeExist(temp.getStuCode()) ){
             JOptionPane.showMessageDialog(this, "Mã sinh viên đã tồn tại! Vui lòng nhập mã sinh viên khác");
         }
         else {
             qlsvModel.insert(temp);
-
             System.out.println(qlsvModel.getStuList());
             this.setVisible(false);
             JOptionPane.showMessageDialog(this, "Thông tin sinh viên đã được thêm thành công!");
