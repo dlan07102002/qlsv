@@ -7,6 +7,7 @@ import javax.swing.table.DefaultTableModel;
 import javax.xml.crypto.dsig.spec.XPathType.Filter;
 
 import controller.QLSVController;
+import model.AccountModel;
 import model.QLSVModel;
 import model.ScoreModel;
 import model.Student;
@@ -21,7 +22,7 @@ import java.util.ArrayList;
 public class QLSVView extends JFrame {
 
     SimpleDateFormat sdf1 = new SimpleDateFormat("dd/MM/yyyy");
-
+    private static AccountModel accModel;
     private static QLSVModel qlsvModel;
     private static ScoreModel scoreModel;
     private DefaultTableModel tableModel ;
@@ -33,7 +34,8 @@ public class QLSVView extends JFrame {
         return table;
     }
 
-    public QLSVView(QLSVModel qlsvModel, ScoreModel scoreModel) throws ParseException {
+    public QLSVView(AccountModel accModel, QLSVModel qlsvModel, ScoreModel scoreModel) throws ParseException {
+        this.accModel = accModel;
         this.qlsvModel = qlsvModel;
         this.scoreModel = scoreModel;
         init();
@@ -42,12 +44,14 @@ public class QLSVView extends JFrame {
 
     public void setQlsvModel(QLSVModel qlsvModel) throws ParseException {
         this.qlsvModel = qlsvModel;
-        init();
+        // init();
+        tableModel.setRowCount(0);
         loadData(qlsvModel);
     }
 
     public void setQLSVModelRender(ArrayList<Student>  list){
-        init();
+        // init();
+        tableModel.setRowCount(0);
         loadData(list);
     }
 
@@ -108,6 +112,10 @@ public class QLSVView extends JFrame {
         scoreButton.addActionListener(qlsvController);
         buttonPanel.add(scoreButton);
 
+        JButton logOutButton = new JButton("Đăng xuất");
+        logOutButton.addActionListener(qlsvController);
+        buttonPanel.add(logOutButton);
+
         JPanel_main.add(scrollPane, BorderLayout.CENTER);
         JPanel_main.add(buttonPanel, BorderLayout.SOUTH);
 
@@ -138,7 +146,6 @@ public class QLSVView extends JFrame {
                     student.getStuName(),
                     student.getHomeTown(),
                     student.getDateOfBirth(),
-                    // student.getSex()
             };
             tableModel.addRow(rowData);
             
@@ -153,7 +160,6 @@ public class QLSVView extends JFrame {
                     student.getStuName(),
                     student.getHomeTown(),
                     student.getDateOfBirth(),
-                    // student.getSex()
             };
             tableModel.addRow(rowData);
         }
@@ -177,6 +183,11 @@ public class QLSVView extends JFrame {
         // Tạo một Filter View mới
         ScoreView scoreView = new ScoreView(qlsvModel, scoreModel);
         // this.setVisible(false);
+    }
+
+    public void logout(){
+        this.setVisible(false);
+        AuthView authView = new AuthView(accModel, qlsvModel, scoreModel);
     }
 
 }

@@ -20,7 +20,6 @@ public class AuthController implements ActionListener{
     public void actionPerformed(ActionEvent e) {
         String src = e.getActionCommand();
         if(src.equals("Đăng nhập")){
-            System.out.println("Loginnnnnnnnn");
             this.authView.login();
         }
     }

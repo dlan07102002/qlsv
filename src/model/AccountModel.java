@@ -16,6 +16,7 @@ public class AccountModel {
             for (Account account : list) {
                 System.out.println(account);
             }
+            this.accList = list;
             this.setAccList(list);
             
         } catch (Exception e) {

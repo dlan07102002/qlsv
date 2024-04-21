@@ -29,7 +29,6 @@ public class QLSVController implements ActionListener{
     //Hai kiểu dữ liệu reference type, so sánh bằng equal, primitive
     public void actionPerformed(ActionEvent e) {
         String src = e.getActionCommand();
-        System.out.println("Bạn vừa ấn vào" + src);
         if(src.equals("Thêm/Sửa/Xóa")){
             try {
                 //Chuyển sang khung nhìn crud
@@ -51,6 +50,15 @@ public class QLSVController implements ActionListener{
             } catch (ParseException e1) {
                 // TODO Auto-generated catch block
                 e1.printStackTrace();
+            }
+        } else if(src.equals("Đăng xuất")){
+            try {
+                this.qlsvView.logout();
+            } catch (Exception e1) {
+                // TODO: handle exception
+                e1.printStackTrace();
+
+
             }
         }
     }

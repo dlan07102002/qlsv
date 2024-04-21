@@ -53,10 +53,5 @@ public class Account {
         return false;
     }
 
-    @Override
-    public String toString() {
-        // TODO Auto-generated method stub
-        return "username: " + username;
-    }
 
 }

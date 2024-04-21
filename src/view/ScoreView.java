@@ -40,12 +40,14 @@ public class ScoreView extends JFrame {
 
     public void setScoreModel(ScoreModel scoreModel) throws ParseException {
         this.scoreModel = scoreModel;
-        init();
+        tableModel.setRowCount(0);
         loadData(scoreModel);
+       
     }
 
-    public void setScoreModelRender(ArrayList<Score>  list){
-        init();
+    public void setScoreModelRender(ArrayList<Score> list) throws ParseException {
+        // init();
+        tableModel.setRowCount(0);
         loadData(list);
     }
 
@@ -134,7 +136,6 @@ public class ScoreView extends JFrame {
                   score.getCheScore(),
                   score.getTotal(),
                   score.classification()
-
             };
             tableModel.addRow(rowData);
         }
@@ -150,7 +151,6 @@ public class ScoreView extends JFrame {
                 score.getCheScore(),
                 score.getTotal(),
                 score.classification()
-
             };
             tableModel.addRow(rowData);
         }
@@ -158,11 +158,11 @@ public class ScoreView extends JFrame {
 
     public void switchToCrudView() throws ParseException {
         // Tạo một crudView mới 
-        CrudView crudView = new CrudView(this.scoreModel, this);
+        CrudView crudView = new CrudView(this.qlsvModel, this.scoreModel, this);
         // this.setVisible(false);
     }
 
-    public void sort(){
+    public void sort() throws ParseException{
         this.setScoreModelRender(this.scoreModel.sort());
     }
 }

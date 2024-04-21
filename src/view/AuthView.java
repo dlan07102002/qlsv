@@ -30,10 +30,6 @@ public class AuthView extends JFrame {
         this.scoreModel = scoreModel;
 
         ArrayList<Account> list = accountModel.getAccList();
-        for (Account account : list) {
-            System.out.println("đã nhận");
-        }
-
         init();
     }
 
@@ -69,27 +65,26 @@ public class AuthView extends JFrame {
     }
 
     public void login(){
-        
         String username = txtUsername.getText();
-        System.out.println(username);
         String password = txtPassword.getText();
-        System.out.println(password);
         //Instance tk
         ArrayList<Account> list = this.accountModel.getAccList();
-
+        Account newAcc = null;
         for (Account account : list) {
-            System.out.println("đã nhận ở đây");
+            //String - reference data, k dùng == , phải dùng equals
+            if(username.equals(account.getUsername() )&& password.equals(account.getPassword())){
+                newAcc = new Account(username, password);
+            }
         }
-        
-        Account newAcc = this.accountModel.searchAccountByUserName(username);
-        System.out.println(newAcc);
         //TK 
         if(newAcc == null){
             JOptionPane.showMessageDialog(this, "tên đăng nhập hoặc mật khẩu không đúng");
         }
         else {
             try {
-                new QLSVView(qlsvModel, scoreModel);
+                 this.setVisible(false);
+
+                new QLSVView(accountModel, qlsvModel, scoreModel);
             } catch (ParseException e) {
                 // TODO Auto-generated catch block
                 e.printStackTrace();

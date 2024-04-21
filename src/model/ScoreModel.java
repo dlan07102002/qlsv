@@ -15,7 +15,6 @@ public class ScoreModel {
             System.out.println(e.getMessage());
         }
         System.out.println("Created score");
-    
     }
 
     public void setScoreList(ArrayList<Score> scoreList) {

@@ -55,7 +55,6 @@ public class AuthModelDAO implements DAOInterface<Account> {
                 
             }
 
-            System.out.println("Ban da thuc thi " + sql);
 
             JDBCUtil.closeConnection(con);
 

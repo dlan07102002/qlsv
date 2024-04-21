@@ -22,8 +22,8 @@ public class Test {
         ScoreModel scoreModel = new ScoreModel();
         AccountModel accModel = new AccountModel();
 
-        new AuthView(accModel, qlsvModel, scoreModel);
+        // new AuthView(accModel, qlsvModel, scoreModel);
         
-        // new QLSVView(qlsvModel, scoreModel); 
+        new QLSVView(accModel, qlsvModel, scoreModel); 
     }
 }

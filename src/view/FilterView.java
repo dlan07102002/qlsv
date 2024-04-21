@@ -78,7 +78,6 @@ public class FilterView extends JFrame {
                 this.qlsvView.setQLSVModelRender(filteredList);
             }
             else {
-                System.out.println("1");
                 JOptionPane.showMessageDialog(this, "Thông tin sinh viên không tồn tại!");
             }
         } else
@@ -89,8 +88,6 @@ public class FilterView extends JFrame {
                 this.qlsvView.setQLSVModelRender(filteredList);
             }
             else {
-                System.out.println("3");
-
                 JOptionPane.showMessageDialog(this, "Thông tin sinh viên không tồn tại!");
             }
         }

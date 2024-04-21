@@ -31,7 +31,6 @@ public class QLSVModelDAO implements DAOInterface<Student> {
             int res = st.executeUpdate(sql);
                         
             System.out.println("Ban da thuc thi " + sql);
-            System.out.println("Có " + res +  " dòng thay đổi");
 
             JDBCUtil.closeConnection(con);
 
@@ -101,6 +100,7 @@ public class QLSVModelDAO implements DAOInterface<Student> {
     public ArrayList<Student> selectAll() {
         ArrayList<Student> stuList = new ArrayList<Student>();
         try {
+            
             Connection con = JDBCUtil.getConnection();
 
             Statement st = con.createStatement();
@@ -141,7 +141,8 @@ public class QLSVModelDAO implements DAOInterface<Student> {
     @Override
     public ArrayList<Student> selectByCondition(String condition) {
         // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'selectByCondition'");
+        return null;
+        // throw new UnsupportedOperationException("Unimplemented method 'selectByCondition'");
     }
     
 }

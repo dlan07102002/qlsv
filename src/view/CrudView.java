@@ -31,7 +31,8 @@ public class CrudView extends JFrame {
         init("qlsv_table");
     }
 
-    public CrudView(ScoreModel scoreModel, ScoreView scoreView) {
+    public CrudView(QLSVModel qlsvModel, ScoreModel scoreModel, ScoreView scoreView) {
+        this.qlsvModel = qlsvModel;
         this.scoreModel = scoreModel;
         this.scoreView = scoreView;
         init("score_table");
@@ -278,14 +279,25 @@ public class CrudView extends JFrame {
 
     //Crud Điểm
     public void saveCreatedScoreData() throws ParseException  {
+
         Score temp = this.info("created", "score");
+    
         if( scoreModel.searchScoreById(temp.getStuCode()) != null ){
-            JOptionPane.showMessageDialog(this, "Sinh viên này đã có điểm! ");
+            JOptionPane.showMessageDialog(this, "Sinh viên này đã có điểm!");
         }
         else {
-            scoreModel.insert(temp);
-            this.setVisible(false);
+            if(qlsvModel.searchStudentById(temp.getStuCode()) != null){
+                scoreModel.insert(temp);
+                this.setVisible(false);
+
             JOptionPane.showMessageDialog(this, "Điểm số của sinh viên đã được thêm thành công!");
+            } 
+            else 
+            {
+            JOptionPane.showMessageDialog(this, "Mã sinh viên không tồn tại!");
+
+            }
+            
         }
     }
 
