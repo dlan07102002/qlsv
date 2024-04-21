@@ -26,30 +26,5 @@ public class FilterController implements ActionListener{
                         e1.printStackTrace();
                 }
         }
-        // if(src.equals("Thay đổi")){
-        //     try {
-        //         this.crudView.saveUpdatedStudentData();
-        //         this.crudView.switchToQLSVView();
-        //     } catch (ParseException e1) {
-        //         // TODO Auto-generated catch block
-        //         e1.printStackTrace();
-        //     }
-        // }else if(src.equals("Thêm")){
-        //     try {
-        //         this.crudView.saveCreatedStudentData();
-        //         this.crudView.switchToQLSVView();
-        //     } catch (ParseException e1) {
-        //         // TODO Auto-generated catch block
-        //         e1.printStackTrace();
-        //     }
-        // }else if(src.equals("Xóa")){
-        //     try {
-        //         this.crudView.deleteStudentData();
-        //         this.crudView.switchToQLSVView();
-        //     } catch (ParseException e1) {
-        //         // TODO Auto-generated catch block
-        //         e1.printStackTrace();
-        //     }
-        // }
     }
 }

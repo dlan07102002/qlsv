@@ -51,6 +51,10 @@ public class Score {
         return total;
     }
 
+    public void setTotal() {
+        this.total =  matScore + phyScore + cheScore;
+    }
+
     public String classification(){
         if(this.total >= 24){
             return "Giỏi";

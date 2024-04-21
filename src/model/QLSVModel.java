@@ -10,9 +10,10 @@ import java.util.Collections;
 import dao.QLSVModelDAO;
 
 public class QLSVModel {
+    //Danh sách các sinh viên, những hàm thêm sửa xóa 
     private static ArrayList<Student> stuList = new ArrayList<Student>();
     
-    public QLSVModel() throws ParseException{
+    public QLSVModel() {
         
         try {
             ArrayList<Student> list = QLSVModelDAO.getInstance().selectAll();
@@ -22,9 +23,6 @@ public class QLSVModel {
         }
         System.out.println("Create");
         
-
-        Collections.sort(this.stuList);
-
     }
 
     public QLSVModel(ArrayList<Student> stuList){
@@ -57,6 +55,8 @@ public class QLSVModel {
         stuSrc.setHomeTown(stuDist.getHomeTown());
         stuSrc.setDateOfBirth(stuDist.getDateOfBirth());
         stuSrc.setGender(stuDist.getGender());
+
+        QLSVModelDAO.getInstance().update(stuDist);
     }
 
     //Lọc danh sách sinh viên theo tên
@@ -71,7 +71,7 @@ public class QLSVModel {
         return listTemp;
     }
 
-    //Lọc danh sách sinh viên theo ID
+    //Tìm sinh viên theo ID
     public Student searchStudentById(int id){
         for(Student i : stuList){
             if(i.getStuCode() == id){

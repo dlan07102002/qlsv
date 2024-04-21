@@ -10,9 +10,9 @@ public class Student implements Comparable<Student> {
     private String homeTown;
     private Date dateOfBirth;
     private boolean gender; //1: Male, 0: Female
-    private Score scoreTable;
+    // private Score scoreTable;
 
-
+    //Tạo ra một instance, overloading - nạp chồng
     public Student(int stuCode, String stuName, String homeTown, Date dateOfBirth, boolean gender){
         this.stuCode = stuCode;
         this.stuName = stuName;
@@ -27,7 +27,7 @@ public class Student implements Comparable<Student> {
         this.homeTown = homeTown;
         this.dateOfBirth = dateOfBirth;
         this.gender = gender;
-        this.scoreTable = scoreTable;
+        // this.scoreTable = scoreTable;
     }
 
     public Student()  {

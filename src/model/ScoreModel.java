@@ -8,7 +8,6 @@ public class ScoreModel {
     private static ArrayList<Score> scoreList = new ArrayList<Score>();
 
     public ScoreModel(){
-           
         try {
             ArrayList<Score> list = ScoreModelDAO.getInstance().selectAll();
             this.setScoreList(list);
@@ -29,6 +28,7 @@ public class ScoreModel {
 
     public void insert(Score score){
         this.scoreList.add(score);
+        ScoreModelDAO.getInstance().insert(score);
     }
 
     public void delete(Score score){
@@ -38,6 +38,23 @@ public class ScoreModel {
     public void update(Score scoSrc, Score scoDist){
         this.scoreList.remove(scoSrc);
         this.scoreList.add(scoDist);
+        ScoreModelDAO.getInstance().update(scoDist);
+    }
+
+    public ArrayList<Score> sort(){
+        try {
+            //JDBC - JAVA DB connectivity
+            //MVC - model view controller
+            //sql -> list đã sắp xếp
+            //set list đấy ra view
+            ArrayList<Score> list = ScoreModelDAO.getInstance().selectByCondition("sort");
+            // this.setScoreList(list);
+            return list;
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+        System.out.println("Created score");
+        return null;
     }
 
     //Lọc danh sách điểm theo ID

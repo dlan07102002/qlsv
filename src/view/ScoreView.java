@@ -7,6 +7,7 @@ import javax.swing.table.DefaultTableModel;
 import javax.xml.crypto.dsig.spec.XPathType.Filter;
 
 import controller.QLSVController;
+import controller.ScoreController;
 import model.QLSVModel;
 import model.Score;
 import model.ScoreModel;
@@ -59,7 +60,7 @@ public class ScoreView extends JFrame {
         JPanel JPanel_main = new JPanel(new BorderLayout());
         
         //Tạo controller
-        // QLSVController qlsvController = new QLSVController(this);
+        ScoreController scoreController = new ScoreController(this);
 
         // Center
         tableModel = new DefaultTableModel()
@@ -88,10 +89,13 @@ public class ScoreView extends JFrame {
         JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
         
         JButton crudButton = new JButton("Thêm/Sửa/Xóa");
+        crudButton.addActionListener(scoreController);
         buttonPanel.add(crudButton);
+        
 
-        JButton filterButton = new JButton("Lọc");
-        buttonPanel.add(filterButton);
+        JButton sortButton = new JButton("Sắp xếp");
+        sortButton.addActionListener(scoreController);
+        buttonPanel.add(sortButton);
 
         JPanel_main.add(scrollPane, BorderLayout.CENTER);
         JPanel_main.add(buttonPanel, BorderLayout.SOUTH);
@@ -152,4 +156,13 @@ public class ScoreView extends JFrame {
         }
     }
 
+    public void switchToCrudView() throws ParseException {
+        // Tạo một crudView mới 
+        CrudView crudView = new CrudView(this.scoreModel, this);
+        // this.setVisible(false);
+    }
+
+    public void sort(){
+        this.setScoreModelRender(this.scoreModel.sort());
+    }
 }

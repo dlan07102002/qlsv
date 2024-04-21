@@ -9,46 +9,37 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
 import model.QLSVModel;
-import view.QLSVView;
+import view.ScoreView;
 
-public class QLSVController implements ActionListener{
+public class ScoreController implements ActionListener{
     // private QLSVModel model;
-    private QLSVView qlsvView;
+    private ScoreView scoreView;
     private MouseListener mouseListener;
         
     public MouseListener getMouseListener() {
-        return new MouseListener(qlsvView);
+        return new MouseListener(scoreView);
     }
 
-    public QLSVController(QLSVView qlsvView){
-        this.qlsvView = qlsvView;
+    public ScoreController(ScoreView scoreView){
+        this.scoreView = scoreView;
         // gán View cho Mouse sau khi đã gán cho QLSV Controller
         
     }
     @Override
-    //Hai kiểu dữ liệu reference type, so sánh bằng equal, primitive
     public void actionPerformed(ActionEvent e) {
         String src = e.getActionCommand();
-        System.out.println("Bạn vừa ấn vào" + src);
         if(src.equals("Thêm/Sửa/Xóa")){
             try {
-                //Chuyển sang khung nhìn crud
-                this.qlsvView.switchToCrudView();
-            } catch (ParseException e1) {
+                this.scoreView.switchToCrudView();
+            } catch (Exception e1) {
                 // TODO Auto-generated catch block
                 e1.printStackTrace();
             }
-        } else if(src.equals("Lọc")){
+        } 
+        else if(src.equals("Sắp xếp")){
             try {
-                this.qlsvView.switchToFilterView();
-            } catch (ParseException e1) {
-                // TODO Auto-generated catch block
-                e1.printStackTrace();
-            }
-        } else if(src.equals("Bảng điểm")){
-            try {
-                this.qlsvView.switchToScoreView();
-            } catch (ParseException e1) {
+                this.scoreView.sort();
+            } catch (Exception e1) {
                 // TODO Auto-generated catch block
                 e1.printStackTrace();
             }
@@ -60,16 +51,16 @@ public class QLSVController implements ActionListener{
 }
 
 class MouseListener implements ListSelectionListener{
-    private QLSVView qlsvView;
-    public MouseListener(QLSVView qlsvView){
-        this.qlsvView = qlsvView;
+    private ScoreView ScoreView;
+    public MouseListener(ScoreView ScoreView){
+        this.ScoreView = ScoreView;
     }
     @Override
     public void valueChanged(ListSelectionEvent e) {
             if (!e.getValueIsAdjusting()) {
-                int selectedRow = this.qlsvView.getTable().getSelectedRow();
+                int selectedRow = this.ScoreView.getTable().getSelectedRow();
                 if (selectedRow != -1) {
-                  System.out.println(this.qlsvView.getTable().getValueAt(selectedRow, 0));
+                  System.out.println(this.ScoreView.getTable().getValueAt(selectedRow, 0));
                 }
             }
         } 

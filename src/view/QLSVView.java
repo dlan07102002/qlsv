@@ -62,7 +62,7 @@ public class QLSVView extends JFrame {
 
         JPanel JPanel_main = new JPanel(new BorderLayout());
         
-        //Tạo controller
+        //Tạo controller -> addActionListener
         QLSVController qlsvController = new QLSVController(this);
 
         // Header
