@@ -36,7 +36,6 @@ public class CrudView extends JFrame {
         this.scoreModel = scoreModel;
         this.scoreView = scoreView;
         init("score_table");
-
     }
 
     private void init(String option) {
@@ -97,7 +96,6 @@ public class CrudView extends JFrame {
       
         //Thêm sửa xóa điểm
         else{
-
             JPanel jPanel_center = new JPanel(new GridLayout(5,2));
             lblStuCode = new JLabel("Mã Sinh Viên:");
             txtStuCode = new JTextField();
@@ -115,7 +113,6 @@ public class CrudView extends JFrame {
 
             jButton_create = new JButton("Thêm");
             jButton_create.addActionListener(crudController.getCrudScoreController());
-
 
             jButton_save = new JButton("Thay đổi");
             jButton_save.addActionListener(crudController.getCrudScoreController());

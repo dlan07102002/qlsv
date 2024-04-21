@@ -26,7 +26,7 @@ public class QLSVView extends JFrame {
     private static QLSVModel qlsvModel;
     private static ScoreModel scoreModel;
     private DefaultTableModel tableModel ;
-
+    private String prio;
 
     private JTable table ;
 
@@ -34,11 +34,12 @@ public class QLSVView extends JFrame {
         return table;
     }
 
-    public QLSVView(AccountModel accModel, QLSVModel qlsvModel, ScoreModel scoreModel) throws ParseException {
+    public QLSVView(String prio, AccountModel accModel, QLSVModel qlsvModel, ScoreModel scoreModel) throws ParseException {
+        this.prio = prio;
         this.accModel = accModel;
         this.qlsvModel = qlsvModel;
         this.scoreModel = scoreModel;
-        init();
+        init(prio);
         loadData();
     }
 
@@ -55,7 +56,7 @@ public class QLSVView extends JFrame {
         loadData(list);
     }
 
-    private void init() {
+    private void init(String prio) {
         
         this.setTitle("Quản lý sinh viên");
         this.setSize(500, 500);
@@ -90,9 +91,6 @@ public class QLSVView extends JFrame {
         tableModel.addColumn("Ngày sinh");
         // tableModel.addColumn("Giới tính");
 
-
-        
-
         table.getSelectionModel().addListSelectionListener(qlsvController.getMouseListener());
 
         JScrollPane scrollPane = new JScrollPane(table);
@@ -100,9 +98,12 @@ public class QLSVView extends JFrame {
         
         JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
         
-        JButton crudButton = new JButton("Thêm/Sửa/Xóa");
-        crudButton.addActionListener(qlsvController);
-        buttonPanel.add(crudButton);
+        if(prio.equals("root")){
+            JButton crudButton = new JButton("Thêm/Sửa/Xóa");
+            crudButton.addActionListener(qlsvController);
+            buttonPanel.add(crudButton);
+        }
+       
 
         JButton filterButton = new JButton("Lọc");
         filterButton.addActionListener(qlsvController);
@@ -165,8 +166,6 @@ public class QLSVView extends JFrame {
         }
     }
 
-
-
     public void switchToCrudView() throws ParseException {
         // Tạo một crudView mới 
         CrudView crudView = new CrudView(qlsvModel, this);
@@ -181,7 +180,7 @@ public class QLSVView extends JFrame {
 
     public void switchToScoreView() throws ParseException {
         // Tạo một Filter View mới
-        ScoreView scoreView = new ScoreView(qlsvModel, scoreModel);
+        ScoreView scoreView = new ScoreView(prio, qlsvModel, scoreModel);
         // this.setVisible(false);
     }
 

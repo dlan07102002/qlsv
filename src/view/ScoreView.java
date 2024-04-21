@@ -31,10 +31,10 @@ public class ScoreView extends JFrame {
         return table;
     }
 
-    public ScoreView(QLSVModel qlsvModel, ScoreModel scoreModel) throws ParseException {
+    public ScoreView(String prio, QLSVModel qlsvModel, ScoreModel scoreModel) throws ParseException {
         this.qlsvModel = qlsvModel;
         this.scoreModel = scoreModel;
-        init();
+        init(prio);
         loadData();
     }
 
@@ -51,7 +51,7 @@ public class ScoreView extends JFrame {
         loadData(list);
     }
 
-    private void init() {
+    private void init(String prio) {
         
         this.setTitle("Bảng điểm sinh viên");
         this.setSize(800, 500);
@@ -90,9 +90,12 @@ public class ScoreView extends JFrame {
         
         JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
         
-        JButton crudButton = new JButton("Thêm/Sửa/Xóa");
-        crudButton.addActionListener(scoreController);
-        buttonPanel.add(crudButton);
+        if(prio.equals("root")){
+            JButton crudButton = new JButton("Thêm/Sửa/Xóa");
+            crudButton.addActionListener(scoreController);
+            buttonPanel.add(crudButton);
+        }
+        
         
 
         JButton sortButton = new JButton("Sắp xếp");

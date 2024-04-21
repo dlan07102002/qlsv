@@ -70,6 +70,7 @@ public class AuthView extends JFrame {
         //Instance tk
         ArrayList<Account> list = this.accountModel.getAccList();
         Account newAcc = null;
+        // Account root = new Account(accountModel.g, password)
         for (Account account : list) {
             //String - reference data, k dùng == , phải dùng equals
             if(username.equals(account.getUsername() )&& password.equals(account.getPassword())){
@@ -77,14 +78,24 @@ public class AuthView extends JFrame {
             }
         }
         //TK 
-        if(newAcc == null){
+        if(accountModel.isRoot(username, password)){
+            try {
+                this.setVisible(false);
+
+                new QLSVView("root",accountModel, qlsvModel, scoreModel);
+            } catch (ParseException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            } 
+        }
+        else if(newAcc == null){
             JOptionPane.showMessageDialog(this, "tên đăng nhập hoặc mật khẩu không đúng");
         }
         else {
             try {
-                 this.setVisible(false);
+                this.setVisible(false);
 
-                new QLSVView(accountModel, qlsvModel, scoreModel);
+                new QLSVView("not root", accountModel, qlsvModel, scoreModel);
             } catch (ParseException e) {
                 // TODO Auto-generated catch block
                 e.printStackTrace();
