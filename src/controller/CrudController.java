@@ -2,10 +2,6 @@ package controller;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.ParseException;
-import java.util.Date;
-
-import model.QLSVModel;
-import view.QLSVView;
 import view.CrudView;
 
 public class CrudController implements ActionListener{
@@ -81,7 +77,7 @@ class CrudScoreController implements ActionListener{
             }
         }else if(src.equals("Xóa")){
             try {
-                this.crudView.deleteStudentData();
+                this.crudView.deleteScoreData();
                 this.crudView.updateScoreView();
             } catch (ParseException e1) {
                 // TODO Auto-generated catch block

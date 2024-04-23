@@ -42,7 +42,6 @@ public class ScoreView extends JFrame {
         this.scoreModel = scoreModel;
         tableModel.setRowCount(0);
         loadData(scoreModel);
-       
     }
 
     public void setScoreModelRender(ArrayList<Score> list) throws ParseException {
@@ -83,8 +82,6 @@ public class ScoreView extends JFrame {
         tableModel.addColumn("Điểm Hóa");   
         tableModel.addColumn("Tổng điểm");      
         tableModel.addColumn("Xếp loại");        
-
-
 
         JScrollPane scrollPane = new JScrollPane(table);
         
@@ -128,7 +125,6 @@ public class ScoreView extends JFrame {
     }
 
     private void loadData(ScoreModel scoreModel_o) throws ParseException {
-     
         ArrayList<Score> scores = scoreModel_o.getScoreList();
         for (Score score : scores) {
             Object[] rowData = {
@@ -161,11 +157,11 @@ public class ScoreView extends JFrame {
 
     public void switchToCrudView() throws ParseException {
         // Tạo một crudView mới 
-        CrudView crudView = new CrudView(this.qlsvModel, this.scoreModel, this);
+        CrudView crudView = new CrudView(qlsvModel, scoreModel, this);
         // this.setVisible(false);
     }
 
     public void sort() throws ParseException{
-        this.setScoreModelRender(this.scoreModel.sort());
+        this.setScoreModel(this.scoreModel.sort());
     }
 }

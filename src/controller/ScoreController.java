@@ -14,11 +14,8 @@ import view.ScoreView;
 public class ScoreController implements ActionListener{
     // private QLSVModel model;
     private ScoreView scoreView;
-    private MouseListener mouseListener;
         
-    public MouseListener getMouseListener() {
-        return new MouseListener(scoreView);
-    }
+   
 
     public ScoreController(ScoreView scoreView){
         this.scoreView = scoreView;
@@ -50,20 +47,6 @@ public class ScoreController implements ActionListener{
     
 }
 
-class MouseListener implements ListSelectionListener{
-    private ScoreView ScoreView;
-    public MouseListener(ScoreView ScoreView){
-        this.ScoreView = ScoreView;
-    }
-    @Override
-    public void valueChanged(ListSelectionEvent e) {
-            if (!e.getValueIsAdjusting()) {
-                int selectedRow = this.ScoreView.getTable().getSelectedRow();
-                if (selectedRow != -1) {
-                  System.out.println(this.ScoreView.getTable().getValueAt(selectedRow, 0));
-                }
-            }
-        } 
-}
+
     
 

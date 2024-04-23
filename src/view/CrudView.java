@@ -25,8 +25,9 @@ public class CrudView extends JFrame {
     private JTextField txtStuCode, txtStuName, txtHomeTown, txtDateOfBirth, txtGender, txtMathScore, txtPhyScore, txtCheScore;
     private JButton jButton_save, jButton_create, jButton_delete;
 
-    public CrudView(QLSVModel qlsvModel, QLSVView qlsvView) throws ParseException {
+    public CrudView(QLSVModel qlsvModel, ScoreModel scoreModel, QLSVView qlsvView) throws ParseException {
         this.qlsvModel = qlsvModel;
+        this.scoreModel = scoreModel;
         this.qlsvView = qlsvView;
         init("qlsv_table");
     }
@@ -34,8 +35,13 @@ public class CrudView extends JFrame {
     public CrudView(QLSVModel qlsvModel, ScoreModel scoreModel, ScoreView scoreView) {
         this.qlsvModel = qlsvModel;
         this.scoreModel = scoreModel;
+        System.out.println(scoreModel.searchScoreById(1));
         this.scoreView = scoreView;
         init("score_table");
+    }
+
+    public ScoreModel getScoreModel() {
+        return scoreModel;
     }
 
     private void init(String option) {
@@ -207,7 +213,7 @@ public class CrudView extends JFrame {
                 Double matScore = Double.parseDouble(matScoreString);
                 Double phyScore = Double.parseDouble(phyScoreString);
                 Double cheScore = Double.parseDouble(cheScoreString);
-                temp = new Score(stuCode, matScore, phyScore, cheScore);
+                temp = new Score( stuCode, matScore, phyScore, cheScore);
             }
         }
         else if(type == "updated"){
@@ -264,8 +270,11 @@ public class CrudView extends JFrame {
     public void deleteStudentData(){
         int delStuCode = Integer.parseInt(txtStuCode.getText());
         Student delStu = qlsvModel.searchStudentById(delStuCode);
+        Score delSco = scoreModel.searchScoreById(delStuCode);
         if(qlsvModel.isStudentExist(delStu)){
+            //Must delete stu before sco to void e
             qlsvModel.delete(delStu);
+            scoreModel.delete(delSco);
             this.setVisible(false);
             JOptionPane.showMessageDialog(this, "Sinh viên: " + delStu.getStuName()+  " đã được xóa khỏi danh sách!");
         }else{
@@ -302,6 +311,7 @@ public class CrudView extends JFrame {
         Score temp = this.info("updated", "score");
         if( scoreModel.searchScoreById(temp.getStuCode()) != null ){
             Score stuChange = scoreModel.searchScoreById(temp.getStuCode());
+            temp.setTotal();
             scoreModel.update(stuChange, temp);
             this.setVisible(false);
             JOptionPane.showMessageDialog(this, "Điểm số của sinh viên đã được cập nhật thành công!");
@@ -311,6 +321,29 @@ public class CrudView extends JFrame {
             JOptionPane.showMessageDialog(this, "Thông tin sinh viên không tồn tại, không thể thay đổi!");
         }
     }
+
+    public void deleteScoreData(){
+        int stuCode = Integer.parseInt(txtStuCode.getText());
+        Score target = scoreModel.searchScoreById(stuCode);
+        Student stuTar = qlsvModel.searchStudentById(stuCode);
+
+                if(qlsvModel.searchStudentById(stuCode) == null){
+                    JOptionPane.showMessageDialog(this, "Mã sinh viên không tồn tại!");
+                }else {
+                    if(target!=null){
+                        target.setCheScore(stuCode);
+                        target.setMatScore(stuCode);
+                        target.setPhyScore(stuCode);
+                        target.setTotal();
+                        Score scoDist = new Score (target.getStuCode(), 0, 0, 0);
+                        scoreModel.update(target, scoDist);
+                        this.setVisible(false);
+                        JOptionPane.showMessageDialog(this, "Điểm số của sinh viên đã được xóa!");
+                    }
+                    JOptionPane.showMessageDialog(this, "Sinh viên này không có điểm số!");
+                }
+            }
+    
 
     public void switchToQLSVView() throws ParseException {
         // Tạo một UpdateView mới và ẩn view hiện tại

@@ -10,6 +10,7 @@ import javax.swing.event.ListSelectionListener;
 
 import model.QLSVModel;
 import view.QLSVView;
+import view.StudentView;
 
 public class QLSVController implements ActionListener{
     // private QLSVModel model;
@@ -60,6 +61,14 @@ public class QLSVController implements ActionListener{
 
 
             }
+        } else if(src.equals("Sinh Viên")){
+            try{
+                // this.qlsvView.
+            }
+            catch (Exception e1) {
+                // TODO: handle exception
+                e1.printStackTrace();
+            }
         }
     }
 
@@ -76,8 +85,11 @@ class MouseListener implements ListSelectionListener{
     public void valueChanged(ListSelectionEvent e) {
             if (!e.getValueIsAdjusting()) {
                 int selectedRow = this.qlsvView.getTable().getSelectedRow();
+                String stuCodeStr =  this.qlsvView.getTable().getValueAt(selectedRow, 0).toString();
+                System.out.println("row" + selectedRow);
+                // new StudentView(Integer.parseInt(stuCodeStr) , qlsvView.getQlsvModel(), qlsvView.getScoreModel());
                 if (selectedRow != -1) {
-                  System.out.println(this.qlsvView.getTable().getValueAt(selectedRow, 0));
+                  System.out.println(stuCodeStr);
                 }
             }
         } 

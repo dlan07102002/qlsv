@@ -7,7 +7,9 @@ public class Score {
     private double cheScore = 0;
     private double total = 0;
 
-    public Score(int stuCode, double matScore, double phyScore, double cheScore){
+    
+
+    public Score( int stuCode, double matScore, double phyScore, double cheScore){
         this.stuCode = stuCode;
         this.matScore = matScore;
         this.phyScore = phyScore;
@@ -60,7 +62,13 @@ public class Score {
             return "Giỏi";
         }else if(this.total >= 15){
             return "Khá";
-        } else return "Bốc cứt";
+        } else return "Yếu";
+    }
+
+    @Override
+    public String toString() {
+        // TODO Auto-generated method stub
+        return "Điểm: " + matScore + " " + phyScore;
     }
 
 }

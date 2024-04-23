@@ -94,7 +94,7 @@ public class FilterView extends JFrame {
     }
 
     public void switchToQLSVView() throws ParseException {
-        this.qlsvView.setQLSVModelRender(filteredList);
+        // this.qlsvView.setQLSVModelRender(filteredList);
         this.setVisible(false);
     }
     

@@ -3,6 +3,8 @@ package test;
 
 import java.text.ParseException;
 
+import javax.swing.UIManager;
+
 import model.AccountModel;
 import model.QLSVModel;
 
@@ -22,8 +24,13 @@ public class Test {
         ScoreModel scoreModel = new ScoreModel();
         AccountModel accModel = new AccountModel();
 
-        new AuthView(accModel, qlsvModel, scoreModel);
-        
-        // new QLSVView(accModel, qlsvModel, scoreModel); 
+        // new AuthView(accModel, qlsvModel, scoreModel);
+        try {  
+            // Set cross-platform Java L&F (also called "Metal")
+            UIManager.setLookAndFeel("javax.swing.plaf.nimbus.NimbusLookAndFeel");
+        } catch(Exception e){
+            e.printStackTrace();
+        }
+        new QLSVView("root", accModel, qlsvModel, scoreModel); 
     }
 }

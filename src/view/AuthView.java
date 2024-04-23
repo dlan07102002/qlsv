@@ -20,8 +20,9 @@ public class AuthView extends JFrame {
     private ScoreModel scoreModel;
 
     private JLabel lblUsername, lblPassword;
-    private JTextField txtUsername, txtPassword;
+    private JTextField txtUsername;
     private JButton jButton_login;
+    private JPasswordField txtPassword;
 
 
     public AuthView(AccountModel accountModel, QLSVModel qlsvModel, ScoreModel scoreModel){
@@ -47,7 +48,7 @@ public class AuthView extends JFrame {
         lblUsername = new JLabel("Tên đăng nhập: ");
         txtUsername = new JTextField();
         lblPassword = new JLabel("Mật khẩu: ");
-        txtPassword = new JTextField();
+        txtPassword = new JPasswordField();
 
         //Tạo Controller
         jButton_login  = new JButton("Đăng nhập");

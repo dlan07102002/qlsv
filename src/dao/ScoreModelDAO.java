@@ -142,7 +142,7 @@ public class ScoreModelDAO implements DAOInterface<Score>{
     }
 
     @Override
-    public ArrayList selectByCondition(String condition) {
+    public ArrayList<Score> selectByCondition(String condition) {
         ArrayList<Score> scoreList = new ArrayList<Score>();
         try {
             Connection con = JDBCUtil.getConnection();

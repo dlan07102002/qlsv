@@ -27,6 +27,7 @@ public class QLSVView extends JFrame {
     private static ScoreModel scoreModel;
     private DefaultTableModel tableModel ;
     private String prio;
+    private QLSVController qlsvController = new QLSVController(this);
 
     private JTable table ;
 
@@ -43,15 +44,22 @@ public class QLSVView extends JFrame {
         loadData();
     }
 
+    public static QLSVModel getQlsvModel() {
+        return qlsvModel;
+    }
+
+    public static ScoreModel getScoreModel() {
+        return scoreModel;
+    }
+
     public void setQlsvModel(QLSVModel qlsvModel) throws ParseException {
         this.qlsvModel = qlsvModel;
-        // init();
         tableModel.setRowCount(0);
         loadData(qlsvModel);
     }
 
     public void setQLSVModelRender(ArrayList<Student>  list){
-        // init();
+        // init(prio);
         tableModel.setRowCount(0);
         loadData(list);
     }
@@ -68,7 +76,6 @@ public class QLSVView extends JFrame {
         JPanel JPanel_main = new JPanel(new BorderLayout());
         
         //Tạo controller -> addActionListener
-        QLSVController qlsvController = new QLSVController(this);
 
         // Header
         // JPanel JPanel_header = new JPanel(new FlowLayout());
@@ -95,14 +102,19 @@ public class QLSVView extends JFrame {
 
         JScrollPane scrollPane = new JScrollPane(table);
         
-        
         JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
         
         if(prio.equals("root")){
             JButton crudButton = new JButton("Thêm/Sửa/Xóa");
             crudButton.addActionListener(qlsvController);
             buttonPanel.add(crudButton);
-        }
+        } 
+        //Nếu TK kphai root
+        // else {
+        //     JButton infoButton = new JButton("Chi tiết");
+        //     infoButton.addActionListener(qlsvController);
+        //     buttonPanel.add(infoButton);
+        // }
        
 
         JButton filterButton = new JButton("Lọc");
@@ -168,7 +180,7 @@ public class QLSVView extends JFrame {
 
     public void switchToCrudView() throws ParseException {
         // Tạo một crudView mới 
-        CrudView crudView = new CrudView(qlsvModel, this);
+        CrudView crudView = new CrudView(qlsvModel, scoreModel, this);
         // this.setVisible(false);
     }
 
