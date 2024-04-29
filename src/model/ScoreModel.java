@@ -62,13 +62,14 @@ public class ScoreModel {
         scoreList.sort((Comparator<? super Score>) new Comparator<Score>() {
             @Override
             public int compare(Score o1, Score o2) {
-                return (int)o2.getTotal()- (int)o1.getTotal();
+                if(o2.getTotal() > o1.getTotal() ){
+                    return 1;
+                } else return -1;
+               
             }
         });
         return this;
     }
-
-
 
     //Lọc danh sách điểm theo ID
     public Score searchScoreById(int id){

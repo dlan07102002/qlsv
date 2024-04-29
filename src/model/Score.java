@@ -68,7 +68,7 @@ public class Score {
     @Override
     public String toString() {
         // TODO Auto-generated method stub
-        return "Điểm: " + matScore + " " + phyScore;
+        return "Điểm: " + matScore + " " + phyScore + " " + cheScore;
     }
 
 }

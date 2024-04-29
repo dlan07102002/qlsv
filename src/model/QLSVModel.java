@@ -14,7 +14,6 @@ public class QLSVModel {
     private static ArrayList<Student> stuList = new ArrayList<Student>();
     
     public QLSVModel() {
-        
         try {
             ArrayList<Student> list = QLSVModelDAO.getInstance().selectAll();
             this.setStuList(list);
@@ -73,10 +72,9 @@ public class QLSVModel {
 
     //Tìm sinh viên theo ID
     public Student searchStudentById(int id){
-        for(Student i : stuList){
-            if(i.getStuCode() == id){
-                return i;
-            }
+        Student target =  QLSVModelDAO.getInstance().selectByID(id);
+        if(target!=null){
+            return target;
         }
         return null;
     }

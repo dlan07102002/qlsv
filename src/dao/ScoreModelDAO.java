@@ -136,7 +136,7 @@ public class ScoreModelDAO implements DAOInterface<Score>{
     }
 
     @Override
-    public Score selectByID(Score t) {
+    public Score selectByID(int t) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'selectByID'");
     }

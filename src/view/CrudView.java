@@ -158,17 +158,21 @@ public class CrudView extends JFrame {
         String stuName = txtStuName.getText();
         String homeTown = txtHomeTown.getText();
         boolean gender = Boolean.parseBoolean(genderStr);
-        Student temp = qlsvModel.searchStudentById(stuCode);
+
+        boolean check = this.qlsvModel.isStuCodeExist(stuCode);
+        Student temp = new Student(stuCode, stuName, homeTown, null, gender);
 
         if(type == "created"){
-            if(temp == null){
+            if(check == false){
+                    System.out.println("temp");
                     String startDate=dateOfBirthStr;
                     SimpleDateFormat sdf1 = new SimpleDateFormat("dd/MM/yyyy");
                     java.util.Date date = sdf1.parse(startDate);
                     java.sql.Date sqlDate = new java.sql.Date(date.getTime()); 
                     Date dateOfBirth = sqlDate;
-                temp = new Student(stuCode, stuName, homeTown, sqlDate, gender);
-            }
+                    System.out.println("name: " + stuName);
+                temp = new Student(stuCode, stuName, homeTown, dateOfBirth, gender);
+            } else temp = this.qlsvModel.searchStudentById(stuCode);
         }
         else if(type == "updated"){
             if(!stuName.isEmpty()){
@@ -202,10 +206,6 @@ public class CrudView extends JFrame {
         String phyScoreString = txtPhyScore.getText();
         String cheScoreString = txtCheScore.getText();
 
-        // Double matScore = Double.parseDouble(matScoreString);
-        // Double phyScore = Double.parseDouble(phyScoreString);
-        // Double cheScore = Double.parseDouble(cheScoreString);
-
         Score temp = scoreModel.searchScoreById(stuCode);
 
         if(type == "created"){
@@ -217,21 +217,25 @@ public class CrudView extends JFrame {
             }
         }
         else if(type == "updated"){
-            if(!matScoreString.isEmpty()){
-                Double matScore = Double.parseDouble(matScoreString);
-                temp.setMatScore(matScore);
+            if(temp == null){
+                System.out.println("Không tồn tại");
+            }else{
+                if(!matScoreString.isEmpty()){
+                    Double matScore = Double.parseDouble(matScoreString);
+                    temp.setMatScore(matScore);
+                }
+                
+                if(!phyScoreString.isEmpty()){
+                    Double phyScore = Double.parseDouble(phyScoreString);
+                    temp.setPhyScore(phyScore);
+                } 
+                
+                if(!cheScoreString.isEmpty()){
+                    Double cheScore = Double.parseDouble(cheScoreString);
+                    temp.setCheScore(cheScore);
+                } 
                 temp.setTotal();
-            } 
-
-            if(!phyScoreString.isEmpty()){
-                Double phyScore = Double.parseDouble(phyScoreString);
-                temp.setPhyScore(phyScore);
-            } 
-
-            if(!cheScoreString.isEmpty()){
-                Double cheScore = Double.parseDouble(phyScoreString);
-                temp.setCheScore(cheScore);
-            } 
+            }
         }
         
         return temp;
@@ -242,6 +246,7 @@ public class CrudView extends JFrame {
 
     public void saveCreatedStudentData() throws ParseException  {
         Student temp = this.info("created");
+
         if( qlsvModel.isStuCodeExist(temp.getStuCode()) ){
             JOptionPane.showMessageDialog(this, "Mã sinh viên đã tồn tại! Vui lòng nhập mã sinh viên khác");
         }
@@ -272,9 +277,9 @@ public class CrudView extends JFrame {
         Student delStu = qlsvModel.searchStudentById(delStuCode);
         Score delSco = scoreModel.searchScoreById(delStuCode);
         if(qlsvModel.isStudentExist(delStu)){
-            //Must delete stu before sco to void e
-            qlsvModel.delete(delStu);
+            //Must delete sco before stu to void e
             scoreModel.delete(delSco);
+            qlsvModel.delete(delStu);
             this.setVisible(false);
             JOptionPane.showMessageDialog(this, "Sinh viên: " + delStu.getStuName()+  " đã được xóa khỏi danh sách!");
         }else{
@@ -292,7 +297,7 @@ public class CrudView extends JFrame {
             JOptionPane.showMessageDialog(this, "Sinh viên này đã có điểm!");
         }
         else {
-            if(qlsvModel.searchStudentById(temp.getStuCode()) != null){
+            if(qlsvModel.isStuCodeExist(temp.getStuCode()) == true){
                 scoreModel.insert(temp);
                 this.setVisible(false);
 
@@ -308,7 +313,9 @@ public class CrudView extends JFrame {
     }
 
     public void saveUpdatedScoreData() throws ParseException  {
+
         Score temp = this.info("updated", "score");
+
         if( scoreModel.searchScoreById(temp.getStuCode()) != null ){
             Score stuChange = scoreModel.searchScoreById(temp.getStuCode());
             temp.setTotal();
@@ -347,14 +354,12 @@ public class CrudView extends JFrame {
 
     public void switchToQLSVView() throws ParseException {
         // Tạo một UpdateView mới và ẩn view hiện tại
-        this.qlsvView.setQlsvModel(qlsvModel);
-        // this.setVisible(false);
+        this.qlsvView.setQLSVModel(qlsvModel);
     }
 
     public void updateScoreView() throws ParseException {
         // Tạo một Filter View mới
         this.scoreView.setScoreModel(scoreModel);
-        // this.setVisible(false);
     }
     
 }

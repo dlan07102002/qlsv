@@ -29,7 +29,6 @@ public class StudentView extends JFrame {
         this.scoreModel = scoreModel;
         Student stu = this.qlsvModel.searchStudentById(stuCode);
         Score sco = this.scoreModel.searchScoreById(stuCode);
-        // System.out.println(stu, sco);
         if(flag == true){
             this.removeAll();
             flag = false;

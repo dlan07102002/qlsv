@@ -63,7 +63,7 @@ public class AuthModelDAO implements DAOInterface<Account> {
     }
 
     @Override
-    public Account selectByID(Account t) {
+    public Account selectByID(int t) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'selectByID'");
     }

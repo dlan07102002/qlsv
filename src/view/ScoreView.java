@@ -40,12 +40,14 @@ public class ScoreView extends JFrame {
 
     public void setScoreModel(ScoreModel scoreModel) throws ParseException {
         this.scoreModel = scoreModel;
+        System.out.println(scoreModel.getScoreList());
         tableModel.setRowCount(0);
         loadData(scoreModel);
     }
 
     public void setScoreModelRender(ArrayList<Score> list) throws ParseException {
         // init();
+        this.scoreModel = scoreModel;
         tableModel.setRowCount(0);
         loadData(list);
     }
@@ -162,6 +164,7 @@ public class ScoreView extends JFrame {
     }
 
     public void sort() throws ParseException{
-        this.setScoreModel(this.scoreModel.sort());
+        // this.setScoreModelRender(this.scoreModel.sort());
+        this.setScoreModel(scoreModel.sort());
     }
 }

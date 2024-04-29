@@ -18,11 +18,12 @@ public class QLSVController implements ActionListener{
     private MouseListener mouseListener;
         
     public MouseListener getMouseListener() {
-        return new MouseListener(qlsvView);
+        return mouseListener;
     }
 
     public QLSVController(QLSVView qlsvView){
         this.qlsvView = qlsvView;
+        this.mouseListener = new MouseListener(qlsvView);
         // gán View cho Mouse sau khi đã gán cho QLSV Controller
         
     }
@@ -85,12 +86,13 @@ class MouseListener implements ListSelectionListener{
     public void valueChanged(ListSelectionEvent e) {
             if (!e.getValueIsAdjusting()) {
                 int selectedRow = this.qlsvView.getTable().getSelectedRow();
-                String stuCodeStr =  this.qlsvView.getTable().getValueAt(selectedRow, 0).toString();
-                System.out.println("row" + selectedRow);
-                // new StudentView(Integer.parseInt(stuCodeStr) , qlsvView.getQlsvModel(), qlsvView.getScoreModel());
+              
                 if (selectedRow != -1) {
-                  System.out.println(stuCodeStr);
-                }
+                    System.out.println("row" + selectedRow);
+                    String stuCodeStr =  this.qlsvView.getTable().getValueAt(selectedRow, 0).toString();
+                    new StudentView(Integer.parseInt(stuCodeStr) , qlsvView.getQlsvModel(), qlsvView.getScoreModel());
+                    System.out.println(stuCodeStr);
+                } 
             }
         } 
 }

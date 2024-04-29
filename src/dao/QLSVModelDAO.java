@@ -130,9 +130,42 @@ public class QLSVModelDAO implements DAOInterface<Student> {
     }
 
     @Override
-    public Student selectByID(Student t) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'selectByID'");
+    public Student selectByID(int id) {
+        Student target = new Student();
+        try {
+            
+            Connection con = JDBCUtil.getConnection();
+
+            Statement st = con.createStatement();
+
+            String sql = "SELECT * FROM stulist where `stu_code` = " + id;
+
+            //Khi execute query sẽ trả về object ResultSet, giống như một table, 
+            // có nhiều dòng
+            ResultSet rs = st.executeQuery(sql);
+            
+            while(rs.next()){
+                int stuCode = rs.getInt("stu_code");
+                String stuName = rs.getString("stu_name");
+                String homeTown = rs.getString("home_town");
+                Date dateOfBirth = rs.getDate("dob");
+                boolean gender = rs.getBoolean("gender");
+                target.setDateOfBirth(dateOfBirth);
+                target.setGender(gender);
+                target.setStuCode(stuCode);
+                target.setStuName(stuName);
+                target.setHomeTown(homeTown);
+            }
+
+            System.out.println("Ban da thuc thi " + sql);
+
+            JDBCUtil.closeConnection(con);
+
+        } catch (Exception e) {
+            // TODO: handle exception
+            e.printStackTrace();
+        }
+        return target;
     }
 
     @Override

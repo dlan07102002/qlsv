@@ -25,11 +25,22 @@ public class QLSVView extends JFrame {
     private static AccountModel accModel;
     private static QLSVModel qlsvModel;
     private static ScoreModel scoreModel;
-    private DefaultTableModel tableModel ;
+    private DefaultTableModel tableModel = new DefaultTableModel()
+    {
+        // Không cho phép chỉnh sửa các ô
+        public boolean isCellEditable(int row, int column) {
+            return false; 
+        }
+    };
+
     private String prio;
     private QLSVController qlsvController = new QLSVController(this);
+    private JTable table = new JTable(tableModel);
 
-    private JTable table ;
+
+    public DefaultTableModel getTableModel() {
+        return tableModel;
+    }
 
     public JTable getTable() {
         return table;
@@ -44,6 +55,15 @@ public class QLSVView extends JFrame {
         loadData();
     }
 
+    public void setReset() {
+
+        for(int i = 1; i <= tableModel.getRowCount(); i++){
+            tableModel.removeRow(i);
+        }
+        // tableModel.setRowCount(0);
+        
+    }
+
     public static QLSVModel getQlsvModel() {
         return qlsvModel;
     }
@@ -52,16 +72,9 @@ public class QLSVView extends JFrame {
         return scoreModel;
     }
 
-    public void setQlsvModel(QLSVModel qlsvModel) throws ParseException {
-        this.qlsvModel = qlsvModel;
+    public void setQLSVModel(QLSVModel qlsvModel) throws ParseException {
         tableModel.setRowCount(0);
         loadData(qlsvModel);
-    }
-
-    public void setQLSVModelRender(ArrayList<Student>  list){
-        // init(prio);
-        tableModel.setRowCount(0);
-        loadData(list);
     }
 
     private void init(String prio) {
@@ -81,17 +94,7 @@ public class QLSVView extends JFrame {
         // JPanel JPanel_header = new JPanel(new FlowLayout());
         // JLabel jLabel_header = new JLabel("");
 
-        // Center
-        tableModel = new DefaultTableModel()
-        {
-            // Không cho phép chỉnh sửa các ô
-            public boolean isCellEditable(int row, int column) {
-                return false; 
-            }
-        };
-
-        table = new JTable(tableModel);
-        
+        // Center  
         tableModel.addColumn("Mã sinh viên");
         tableModel.addColumn("Tên sinh viên");
         tableModel.addColumn("Địa chỉ");
@@ -109,13 +112,6 @@ public class QLSVView extends JFrame {
             crudButton.addActionListener(qlsvController);
             buttonPanel.add(crudButton);
         } 
-        //Nếu TK kphai root
-        // else {
-        //     JButton infoButton = new JButton("Chi tiết");
-        //     infoButton.addActionListener(qlsvController);
-        //     buttonPanel.add(infoButton);
-        // }
-       
 
         JButton filterButton = new JButton("Lọc");
         filterButton.addActionListener(qlsvController);
@@ -161,7 +157,6 @@ public class QLSVView extends JFrame {
                     student.getDateOfBirth(),
             };
             tableModel.addRow(rowData);
-            
         }
     }
 

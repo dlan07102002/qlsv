@@ -1,23 +1,19 @@
 package view;
 
 import javax.swing.*;
+import java.awt.*;
+import java.text.ParseException;
+import java.util.ArrayList;
 
 import controller.FilterController;
+import controller.QLSVController;
+import dao.QLSVModelDAO;
 import model.QLSVModel;
 import model.Student;
-
-import java.awt.*;
-import java.awt.event.*;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
 
 public class FilterView extends JFrame {
     private QLSVModel qlsvModel;
     private QLSVView qlsvView;
-    private ArrayList<Student> filteredList = new ArrayList<Student>();
-
 
     private JLabel lblStuCode, lblStuName;
     private JTextField txtStuCode, txtStuName;
@@ -48,7 +44,6 @@ public class FilterView extends JFrame {
         jButton_filter = new JButton("Lọc");
         jButton_filter.addActionListener(filterController);        
 
-
         jPanel_center.add(lblStuCode);
         jPanel_center.add(txtStuCode);
         jPanel_center.add(lblStuName);
@@ -62,20 +57,22 @@ public class FilterView extends JFrame {
 
     }
 
-    public void filteredStudent(){
-        String inputStuName = txtStuName.getText();
-        String inputStuCode = txtStuCode.getText();
+    public void filteredStudent() throws ParseException{
+        ArrayList<Student> filteredList = new ArrayList<Student>();
+        String inputStuName = txtStuName.getText().trim();
+        String inputStuCode = txtStuCode.getText().trim();
         if(inputStuCode.isEmpty() && inputStuName.isEmpty()){
-            filteredList = qlsvModel.getStuList();
-            this.qlsvView.setQLSVModelRender(filteredList);
+            filteredList = QLSVModelDAO.getInstance().selectAll();
+            qlsvModel.setStuList(filteredList);
+            qlsvView.setQLSVModel(qlsvModel);
             JOptionPane.showMessageDialog(this, "Vui lòng nhập MSV hoặc tên của Sinh Viên!");
 
         }
-        else
-        if(!inputStuName.isEmpty()){
+        //Lỗi khi gán lại qlsvModel
+        else if(!inputStuName.isEmpty()){
             filteredList = qlsvModel.searchStudent(txtStuName.getText());
             if(!filteredList.isEmpty()){
-                this.qlsvView.setQLSVModelRender(filteredList);
+                this.qlsvView.setQLSVModel(new QLSVModel(filteredList));
             }
             else {
                 JOptionPane.showMessageDialog(this, "Thông tin sinh viên không tồn tại!");
@@ -85,7 +82,7 @@ public class FilterView extends JFrame {
             Student temp = qlsvModel.searchStudentById(Integer.parseInt(inputStuCode));
             if(temp != null){
                 filteredList.add(temp);
-                this.qlsvView.setQLSVModelRender(filteredList);
+                this.qlsvView.setQLSVModel( new QLSVModel(filteredList));
             }
             else {
                 JOptionPane.showMessageDialog(this, "Thông tin sinh viên không tồn tại!");
@@ -94,7 +91,6 @@ public class FilterView extends JFrame {
     }
 
     public void switchToQLSVView() throws ParseException {
-        // this.qlsvView.setQLSVModelRender(filteredList);
         this.setVisible(false);
     }
     
