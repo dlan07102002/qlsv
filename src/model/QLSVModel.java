@@ -50,12 +50,19 @@ public class QLSVModel {
     }
 
     public void update(Student stuSrc, Student stuDist){
-        stuSrc.setStuName(stuDist.getStuName());
-        stuSrc.setHomeTown(stuDist.getHomeTown());
-        stuSrc.setDateOfBirth(stuDist.getDateOfBirth());
-        stuSrc.setGender(stuDist.getGender());
-
-        QLSVModelDAO.getInstance().update(stuDist);
+        // stuSrc.setStuName(stuDist.getStuName());
+        // stuSrc.setHomeTown(stuDist.getHomeTown());
+        // stuSrc.setDateOfBirth(stuDist.getDateOfBirth());
+        // stuSrc.setGender(stuDist.getGender());
+        int indexSrc = 0;
+        for (int i = 0; i < stuList.size(); i++) {
+            if(stuList.get(i).getStuCode() == stuSrc.getStuCode()){
+                indexSrc = i;
+                stuList.set(indexSrc, stuDist);
+                QLSVModelDAO.getInstance().update(stuDist);
+                return;
+            }
+        }
     }
 
     //Lọc danh sách sinh viên theo tên

@@ -45,13 +45,6 @@ public class ScoreView extends JFrame {
         loadData(scoreModel);
     }
 
-    public void setScoreModelRender(ArrayList<Score> list) throws ParseException {
-        // init();
-        this.scoreModel = scoreModel;
-        tableModel.setRowCount(0);
-        loadData(list);
-    }
-
     private void init(String prio) {
         
         this.setTitle("Bảng điểm sinh viên");
@@ -95,8 +88,6 @@ public class ScoreView extends JFrame {
             buttonPanel.add(crudButton);
         }
         
-        
-
         JButton sortButton = new JButton("Sắp xếp");
         sortButton.addActionListener(scoreController);
         buttonPanel.add(sortButton);
@@ -142,21 +133,6 @@ public class ScoreView extends JFrame {
         }
     }
 
-    private void loadData(ArrayList<Score>  list){
-        for (Score score : list) {
-            Object[] rowData = {
-                score.getStuCode(),
-                qlsvModel.searchStudentById(score.getStuCode()).getStuName(),
-                score.getMatScore(),
-                score.getPhyScore(),
-                score.getCheScore(),
-                score.getTotal(),
-                score.classification()
-            };
-            tableModel.addRow(rowData);
-        }
-    }
-
     public void switchToCrudView() throws ParseException {
         // Tạo một crudView mới 
         CrudView crudView = new CrudView(qlsvModel, scoreModel, this);
@@ -164,7 +140,6 @@ public class ScoreView extends JFrame {
     }
 
     public void sort() throws ParseException{
-        // this.setScoreModelRender(this.scoreModel.sort());
         this.setScoreModel(scoreModel.sort());
     }
 }

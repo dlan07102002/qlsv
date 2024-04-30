@@ -24,13 +24,13 @@ public class Test {
         ScoreModel scoreModel = new ScoreModel();
         AccountModel accModel = new AccountModel();
 
-        // new AuthView(accModel, qlsvModel, scoreModel);
         try {  
             // Set cross-platform Java L&F (also called "Metal")
             UIManager.setLookAndFeel("javax.swing.plaf.nimbus.NimbusLookAndFeel");
         } catch(Exception e){
             e.printStackTrace();
         }
+        // new AuthView(accModel, qlsvModel, scoreModel);
         new QLSVView("root", accModel, qlsvModel, scoreModel); 
     }
 }

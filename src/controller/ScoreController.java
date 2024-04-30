@@ -42,10 +42,27 @@ public class ScoreController implements ActionListener{
             }
         }
     }
-
-    //Set List Selection Listener
-    
 }
+
+// class MouseListener implements ListSelectionListener{
+//     private ScoreView scoreView;
+//     public MouseListener(ScoreView scoreView){
+//         this.scoreView = scoreView;
+//     }
+//     @Override
+//     public void valueChanged(ListSelectionEvent e) {
+//             if (!e.getValueIsAdjusting()) {
+//                 int selectedRow = this.scoreView.getTable().getSelectedRow();
+              
+//                 if (selectedRow != -1) {
+//                     System.out.println("row" + selectedRow);
+//                     String stuCodeStr =  this.scoreView.getTable().getValueAt(selectedRow, 0).toString();
+//                     new ScoreV(Integer.parseInt(stuCodeStr) , scoreView.getQlsvModel(), scoreView.getScoreModel());
+//                     System.out.println(stuCodeStr);
+//                 } 
+//             }
+//         } 
+// }
 
 
     

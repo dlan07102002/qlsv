@@ -154,10 +154,14 @@ public class CrudView extends JFrame {
         int stuCode = Integer.parseInt(txtStuCode.getText());
         String dateOfBirthStr = txtDateOfBirth.getText();
         String genderStr = txtGender.getText();
+        boolean gender;
 
         String stuName = txtStuName.getText();
         String homeTown = txtHomeTown.getText();
-        boolean gender = Boolean.parseBoolean(genderStr);
+
+        if(genderStr.trim().toLowerCase().equals("nam")){
+            gender = true;
+        }else gender = false;
 
         boolean check = this.qlsvModel.isStuCodeExist(stuCode);
         Student temp = new Student(stuCode, stuName, homeTown, null, gender);
@@ -175,6 +179,8 @@ public class CrudView extends JFrame {
             } else temp = this.qlsvModel.searchStudentById(stuCode);
         }
         else if(type == "updated"){
+            temp = this.qlsvModel.searchStudentById(temp.getStuCode());
+
             if(!stuName.isEmpty()){
                 temp.setStuName(stuName);
             } 
@@ -189,8 +195,9 @@ public class CrudView extends JFrame {
                 java.util.Date date = sdf1.parse(startDate);
                 java.sql.Date sqlDate = new java.sql.Date(date.getTime()); 
                 Date dateOfBirth = sqlDate;
+               
                 temp.setDateOfBirth(dateOfBirth);
-            }
+            } 
 
             if(!genderStr.isEmpty()){
                 temp.setGender(gender);
@@ -214,11 +221,11 @@ public class CrudView extends JFrame {
                 Double phyScore = Double.parseDouble(phyScoreString);
                 Double cheScore = Double.parseDouble(cheScoreString);
                 temp = new Score( stuCode, matScore, phyScore, cheScore);
-            }
+            } 
         }
         else if(type == "updated"){
             if(temp == null){
-                System.out.println("Không tồn tại");
+                JOptionPane.showMessageDialog(this, "Sinh viên này chưa có điểm, vui lòng thêm điểm cho sinh viên!");
             }else{
                 if(!matScoreString.isEmpty()){
                     Double matScore = Double.parseDouble(matScoreString);
@@ -261,13 +268,12 @@ public class CrudView extends JFrame {
     public void saveUpdatedStudentData() throws ParseException  {
         Student temp = this.info("updated");
         if( qlsvModel.isStuCodeExist(temp.getStuCode()) || qlsvModel.isStudentExist(temp) ){
-            Student stuChange = qlsvModel.searchStudentById(temp.getStuCode());
-            qlsvModel.update(stuChange, temp);
+            Student stuSrc = qlsvModel.searchStudentById(temp.getStuCode());
+            qlsvModel.update(stuSrc, temp);
             this.setVisible(false);
             JOptionPane.showMessageDialog(this, "Thông tin sinh viên đã được cập nhật thành công!");
         }
         else {
-            qlsvModel.insert(temp);
             JOptionPane.showMessageDialog(this, "Thông tin sinh viên không tồn tại, không thể thay đổi!");
         }
     }

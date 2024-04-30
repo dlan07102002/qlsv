@@ -49,7 +49,7 @@ public class QLSVModelDAO implements DAOInterface<Student> {
             Statement st = con.createStatement();
 
             String sql = "UPDATE `qlsv`.`stulist` SET `stu_name` = '" + t.getStuName() +"' , `home_town` = '" + t.getHomeTown() +"', `dob` = '" + t.getDateOfBirth() +"' , `gender` = " + t.getGender() 
-                        +" WHERE (`stu_code` ="+t.getStuCode()+" )";
+                        +" WHERE (`stu_code` ="+ t.getStuCode() + " )";
 
             System.out.println(sql);
 

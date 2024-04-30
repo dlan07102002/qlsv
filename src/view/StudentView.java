@@ -2,23 +2,18 @@ package view;
 
 import javax.swing.*;
 
-import controller.FilterController;
 import model.QLSVModel;
 import model.Score;
 import model.ScoreModel;
 import model.Student;
 
 import java.awt.*;
-import java.awt.event.*;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
+
 
 public class StudentView extends JFrame {
     private QLSVModel qlsvModel;
     private ScoreModel scoreModel;
-    private boolean flag = false;
+    // private boolean flag = false;
 
     private JLabel lblStuCode, lblStuName, lblHomeTown, lblDob, lblGender, lblMatScore, lblPhyScore, lblCheScore, lblTotalScore, lblType;
     private JLabel txtStuCode, txtStuName, txtHomeTown, txtDob, txtGender, txtMatScore, txtPhyScore, txtCheScore, txtTotalScore, txtType;
@@ -29,16 +24,19 @@ public class StudentView extends JFrame {
         this.scoreModel = scoreModel;
         Student stu = this.qlsvModel.searchStudentById(stuCode);
         Score sco = this.scoreModel.searchScoreById(stuCode);
-        if(flag == true){
-            this.removeAll();
-            flag = false;
+        // if(flag == true){
+        //     this.removeAll();
+        //     flag = false;
+        // }
+        if(sco == null){
+            sco = new Score(stuCode, 0, 0, 0);
         }
         init(stu, sco);
         
     }
 
     private void init(Student stu, Score sco) {
-        flag = true;
+        // flag = true;
         this.setLayout(new BorderLayout());
         JPanel jpanel_center = new JPanel(new GridLayout(9  , 2));
         this.setBackground(Color.BLACK);

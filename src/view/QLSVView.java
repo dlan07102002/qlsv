@@ -60,7 +60,6 @@ public class QLSVView extends JFrame {
         for(int i = 1; i <= tableModel.getRowCount(); i++){
             tableModel.removeRow(i);
         }
-        // tableModel.setRowCount(0);
         
     }
 
@@ -150,19 +149,6 @@ public class QLSVView extends JFrame {
      
         ArrayList<Student> students = qlsvModel_o.getStuList();
         for (Student student : students) {
-            Object[] rowData = {
-                    student.getStuCode(),
-                    student.getStuName(),
-                    student.getHomeTown(),
-                    student.getDateOfBirth(),
-            };
-            tableModel.addRow(rowData);
-        }
-    }
-
-    private void loadData(ArrayList<Student> list){
-        
-        for (Student student : list) {
             Object[] rowData = {
                     student.getStuCode(),
                     student.getStuName(),
