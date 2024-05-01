@@ -1,25 +1,26 @@
 package controller;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.text.ParseException;
-import java.util.Date;
 
-import javax.swing.JOptionPane;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
-import model.QLSVModel;
 import view.ScoreView;
+import view.SubjectView;
 
 public class ScoreController implements ActionListener{
     // private QLSVModel model;
     private ScoreView scoreView;
-        
-   
+    private ScoreMouseListener mouseListener;
 
+    public ScoreMouseListener getMouseListener(){
+        return mouseListener;
+    }
+    
     public ScoreController(ScoreView scoreView){
         this.scoreView = scoreView;
-        // gán View cho Mouse sau khi đã gán cho QLSV Controller
+        this.mouseListener = new ScoreMouseListener(scoreView);
+        // gán View cho Mouse sau khi đã gán cho Score Controller
         
     }
     @Override
@@ -44,25 +45,24 @@ public class ScoreController implements ActionListener{
     }
 }
 
-// class MouseListener implements ListSelectionListener{
-//     private ScoreView scoreView;
-//     public MouseListener(ScoreView scoreView){
-//         this.scoreView = scoreView;
-//     }
-//     @Override
-//     public void valueChanged(ListSelectionEvent e) {
-//             if (!e.getValueIsAdjusting()) {
-//                 int selectedRow = this.scoreView.getTable().getSelectedRow();
-              
-//                 if (selectedRow != -1) {
-//                     System.out.println("row" + selectedRow);
-//                     String stuCodeStr =  this.scoreView.getTable().getValueAt(selectedRow, 0).toString();
-//                     new ScoreV(Integer.parseInt(stuCodeStr) , scoreView.getQlsvModel(), scoreView.getScoreModel());
-//                     System.out.println(stuCodeStr);
-//                 } 
-//             }
-//         } 
-// }
+class ScoreMouseListener implements ListSelectionListener{
+    private ScoreView scoreView;
+    public ScoreMouseListener(ScoreView scoreView){
+        this.scoreView = scoreView;
+    }
+    @Override
+    public void valueChanged(ListSelectionEvent e) {
+            if (!e.getValueIsAdjusting()) {
+                int selectedColumn = this.scoreView.getTable().getSelectedColumn();
+                if(selectedColumn != -1){
+                    System.out.println("column " + selectedColumn);
+                    if(selectedColumn == 2 || selectedColumn == 3 || selectedColumn == 4){
+                        new SubjectView(scoreView.getScoreModel(), selectedColumn);
+                    }
+                }
+            }
+        } 
+}
 
 
     

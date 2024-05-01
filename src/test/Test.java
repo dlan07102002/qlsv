@@ -5,12 +5,14 @@ import java.text.ParseException;
 
 import javax.swing.UIManager;
 
+import dao.ScoreModelDAO;
 import model.AccountModel;
 import model.QLSVModel;
 
 import model.ScoreModel;
 import view.AuthView;
 import view.QLSVView;
+import view.SubjectView;
 
 
 public class Test {
@@ -32,5 +34,7 @@ public class Test {
         }
         // new AuthView(accModel, qlsvModel, scoreModel);
         new QLSVView("root", accModel, qlsvModel, scoreModel); 
+        ScoreModelDAO.getInstance().selectScore(1);
+        // new SubjectView();
     }
 }

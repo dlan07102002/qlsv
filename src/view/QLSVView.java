@@ -1,10 +1,7 @@
 package view;
 
 import javax.swing.*;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
-import javax.xml.crypto.dsig.spec.XPathType.Filter;
 
 import controller.QLSVController;
 import model.AccountModel;
@@ -139,7 +136,6 @@ public class QLSVView extends JFrame {
                     student.getStuName(),
                     student.getHomeTown(),
                     student.getDateOfBirth(),
-                    // student.getSex()
             };
             tableModel.addRow(rowData);
         }

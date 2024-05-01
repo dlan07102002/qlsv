@@ -1,31 +1,38 @@
 package view;
 
 import javax.swing.*;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
-import javax.xml.crypto.dsig.spec.XPathType.Filter;
 
-import controller.QLSVController;
 import controller.ScoreController;
 import model.QLSVModel;
 import model.Score;
 import model.ScoreModel;
-import model.Student;
 
 
 import java.awt.*;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 
 public class ScoreView extends JFrame {
     private static QLSVModel qlsvModel;
     private static ScoreModel scoreModel;
-    private DefaultTableModel tableModel ;
 
-    private JTable table ;
+    public static ScoreModel getScoreModel() {
+        return scoreModel;
+    }
+    
+    private DefaultTableModel tableModel = new DefaultTableModel()
+    {
+        // Không cho phép chỉnh sửa các ô
+        public boolean isCellEditable(int row, int column) {
+            return false; 
+        }
+    }; ;
+
+    private JTable table = new JTable(tableModel);
+    private ScoreController scoreController = new ScoreController(this);
+
 
     public JTable getTable() {
         return table;
@@ -56,18 +63,8 @@ public class ScoreView extends JFrame {
         JPanel JPanel_main = new JPanel(new BorderLayout());
         
         //Tạo controller
-        ScoreController scoreController = new ScoreController(this);
 
         // Center
-        tableModel = new DefaultTableModel()
-        {
-            // Không cho phép chỉnh sửa các ô
-            public boolean isCellEditable(int row, int column) {
-                return false; 
-            }
-        };
-
-        table = new JTable(tableModel);
         
         tableModel.addColumn("Mã sinh viên");
         tableModel.addColumn("Tên sinh viên");
@@ -76,7 +73,8 @@ public class ScoreView extends JFrame {
         tableModel.addColumn("Điểm Lý");
         tableModel.addColumn("Điểm Hóa");   
         tableModel.addColumn("Tổng điểm");      
-        tableModel.addColumn("Xếp loại");        
+        tableModel.addColumn("Xếp loại");   
+          
 
         JScrollPane scrollPane = new JScrollPane(table);
         
@@ -94,6 +92,8 @@ public class ScoreView extends JFrame {
 
         JPanel_main.add(scrollPane, BorderLayout.CENTER);
         JPanel_main.add(buttonPanel, BorderLayout.SOUTH);
+
+        table.getSelectionModel().addListSelectionListener(scoreController.getMouseListener());
 
         this.add(JPanel_main);
         this.setVisible(true);
