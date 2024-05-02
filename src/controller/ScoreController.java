@@ -2,8 +2,10 @@ package controller;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.JFrame;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
+import javax.swing.event.TableColumnModelListener;
 
 import view.ScoreView;
 import view.SubjectView;
@@ -21,8 +23,8 @@ public class ScoreController implements ActionListener{
         this.scoreView = scoreView;
         this.mouseListener = new ScoreMouseListener(scoreView);
         // gán View cho Mouse sau khi đã gán cho Score Controller
-        
     }
+
     @Override
     public void actionPerformed(ActionEvent e) {
         String src = e.getActionCommand();
@@ -47,20 +49,29 @@ public class ScoreController implements ActionListener{
 
 class ScoreMouseListener implements ListSelectionListener{
     private ScoreView scoreView;
+    private SubjectView subjectView = null;
     public ScoreMouseListener(ScoreView scoreView){
         this.scoreView = scoreView;
     }
     @Override
+
     public void valueChanged(ListSelectionEvent e) {
             if (!e.getValueIsAdjusting()) {
                 int selectedColumn = this.scoreView.getTable().getSelectedColumn();
                 if(selectedColumn != -1){
                     System.out.println("column " + selectedColumn);
+
                     if(selectedColumn == 2 || selectedColumn == 3 || selectedColumn == 4){
-                        new SubjectView(scoreView.getScoreModel(), selectedColumn);
+
+                        // Đóng cửa sổ nếu đã xuất hiện
+                        if(subjectView != null){
+                            subjectView.setVisible(false);
+                        }
+                        this.subjectView =  new SubjectView(ScoreView.getScoreModel(), selectedColumn);
                     }
                 }
             }
+            
         } 
 }
 

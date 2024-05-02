@@ -1,8 +1,6 @@
 package model;
 
 public class Account {
-    private String rootUsername = "duclan0710";
-    private String rootPassword = "duclan0710";
     private int rootPriority = 1 ;
 
     private String username;
@@ -39,13 +37,7 @@ public class Account {
         return priority;
     }
 
-    public boolean rootAccess(String username, String password){
-        if(username == rootUsername && password == rootPassword ){
-            return true;
-        }   
-        return false;
-    }
-
+   
     public boolean userAccess(String username, String password){
         if(this.username == username && this.password == password ){
             return true;

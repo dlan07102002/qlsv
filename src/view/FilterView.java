@@ -33,6 +33,8 @@ public class FilterView extends JFrame {
 
 
         JPanel jPanel_center = new JPanel(new GridLayout(2,2));
+        jPanel_center.setBorder(BorderFactory.createEmptyBorder(10, 20, 10,0 ));
+
         lblStuCode = new JLabel("Mã Sinh Viên:");
         txtStuCode = new JTextField();
         lblStuName = new JLabel("Họ và Tên:");
@@ -61,6 +63,7 @@ public class FilterView extends JFrame {
         ArrayList<Student> filteredList = new ArrayList<Student>();
         String inputStuName = txtStuName.getText().trim();
         String inputStuCode = txtStuCode.getText().trim();
+
         if(inputStuCode.isEmpty() && inputStuName.isEmpty()){
             filteredList = QLSVModelDAO.getInstance().selectAll();
             qlsvModel.setStuList(filteredList);
@@ -68,7 +71,23 @@ public class FilterView extends JFrame {
             JOptionPane.showMessageDialog(this, "Vui lòng nhập MSV hoặc tên của Sinh Viên!");
 
         }
-        //Lỗi khi gán lại qlsvModel
+        else if(!inputStuCode.isEmpty() && !inputStuName.isEmpty()) {
+            filteredList = qlsvModel.searchStudent(txtStuName.getText());
+            ArrayList<Student> res = new ArrayList<Student>();
+            int stuCode = Integer.parseInt(inputStuCode);
+            
+            System.out.println(inputStuCode);
+            System.out.println(inputStuName);
+            for (Student student : filteredList) {
+                if(student.getStuCode() == stuCode){
+                    res.add(student);
+                    this.qlsvView.setQLSVModel(new QLSVModel(res));
+                }
+            }
+            if(res.size() == 0){
+                JOptionPane.showMessageDialog(this, "Thông tin sinh viên không tồn tại!");
+            }
+        }
         else if(!inputStuName.isEmpty()){
             filteredList = qlsvModel.searchStudent(txtStuName.getText());
             if(!filteredList.isEmpty()){
@@ -77,17 +96,24 @@ public class FilterView extends JFrame {
             else {
                 JOptionPane.showMessageDialog(this, "Thông tin sinh viên không tồn tại!");
             }
-        } else
+        } 
+        else if(!inputStuCode.isEmpty())
         {
             Student temp = qlsvModel.searchStudentById(Integer.parseInt(inputStuCode));
             if(temp != null){
-                filteredList.add(temp);
-                this.qlsvView.setQLSVModel( new QLSVModel(filteredList));
+                if(temp.getStuCode()==0){
+                    JOptionPane.showMessageDialog(this, "Thông tin sinh viên không tồn tại!");
+                } 
+                else {
+                    filteredList.add(temp);
+                    this.qlsvView.setQLSVModel( new QLSVModel(filteredList));
+                }
             }
             else {
                 JOptionPane.showMessageDialog(this, "Thông tin sinh viên không tồn tại!");
             }
         }
+     
     }
 
     public void switchToQLSVView() throws ParseException {

@@ -66,15 +66,12 @@ public class QLSVModel {
     }
 
     //Lọc danh sách sinh viên theo tên
-    public ArrayList<Student> searchStudent(String ten){
-        ArrayList<Student> listTemp = new ArrayList<Student>();
-        for(Student i : stuList){
-            if(i.getStuName().indexOf(ten)>=0){
-                listTemp.add(i);
-            }
+    public ArrayList<Student> searchStudent(String name){
+        ArrayList<Student> listTemp = QLSVModelDAO.getInstance().selectByName(name);
+        if(listTemp.size() != 0){
+            return listTemp;
         }
-
-        return listTemp;
+        return null;
     }
 
     //Tìm sinh viên theo ID

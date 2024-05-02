@@ -58,13 +58,7 @@ public class ScoreView extends JFrame {
         this.setSize(800, 500);
         this.setLocationRelativeTo(null);
 
-        // Font sansSerifFont = new Font("SansSerif", Font.PLAIN, 12);
-
         JPanel JPanel_main = new JPanel(new BorderLayout());
-        
-        //Tạo controller
-
-        // Center
         
         tableModel.addColumn("Mã sinh viên");
         tableModel.addColumn("Tên sinh viên");

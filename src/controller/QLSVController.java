@@ -6,6 +6,7 @@ import java.text.ParseException;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
+import view.CrudView;
 import view.QLSVView;
 import view.StudentView;
 
@@ -13,6 +14,7 @@ public class QLSVController implements ActionListener{
     // private QLSVModel model;
     private QLSVView qlsvView;
     private MouseListener mouseListener;
+    private CrudView crudView;
         
     public MouseListener getMouseListener() {
         return mouseListener;
@@ -28,11 +30,15 @@ public class QLSVController implements ActionListener{
     //Hai kiểu dữ liệu reference type, so sánh bằng equal, primitive
     public void actionPerformed(ActionEvent e) {
         String src = e.getActionCommand();
+        if(crudView != null){
+            crudView.setVisible(false);
+        }
         if(src.equals("Thêm/Sửa/Xóa")){
             try {
                 //Chuyển sang khung nhìn crud
-                this.qlsvView.switchToCrudView();
-            } catch (ParseException e1) {
+                crudView = this.qlsvView.switchToCrudView();
+
+            } catch (Exception e1) {
                 // TODO Auto-generated catch block
                 e1.printStackTrace();
             }
@@ -56,12 +62,10 @@ public class QLSVController implements ActionListener{
             } catch (Exception e1) {
                 // TODO: handle exception
                 e1.printStackTrace();
-
-
             }
-        } else if(src.equals("Sinh Viên")){
+        } else if(src.equals("Tạo tài khoản") || src.equals("Xóa tài khoản")){
             try{
-                // this.qlsvView.
+                crudView = this.qlsvView.switchToCrudAccView();
             }
             catch (Exception e1) {
                 // TODO: handle exception

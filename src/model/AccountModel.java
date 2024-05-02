@@ -7,8 +7,9 @@ import dao.AuthModelDAO;
 public class AccountModel {
     //list tk, root -> sửa, kphai root -> xem
     private static ArrayList<Account> accList = new ArrayList<Account>();
-    private String rootUsername = "root";
-    private String rootPassword = "root";
+    final String rootUsername = "root";
+    final String rootPassword = "root";
+
 
     public AccountModel(){
         try {
@@ -24,6 +25,8 @@ public class AccountModel {
         }
         System.out.println("Create");
     }
+
+    
 
     public boolean isRoot(String username, String password){
         if(username.equals(this.rootUsername) && password.equals(this.rootPassword)){
@@ -44,15 +47,20 @@ public class AccountModel {
     public void createAccount( String username, String password){
         Account newAcc = new Account(username, password);
         accList.add(newAcc);
+        setAccList(accList);
+
+        AuthModelDAO.getInstance().insert(newAcc);
     }
 
     public void deleteAccount(Account acc){
         accList.remove(acc);
+
+        AuthModelDAO.getInstance().drop(acc);
     }
 
     public Account searchAccountByUserName(String username){
         for (Account account : accList) {
-            if(account.getUsername() == username){
+            if(account.getUsername().equals(username)){
                 return account;
             }
         }

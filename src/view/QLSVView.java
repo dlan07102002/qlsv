@@ -30,6 +30,7 @@ public class QLSVView extends JFrame {
         }
     };
 
+
     private String prio;
     private QLSVController qlsvController = new QLSVController(this);
     private JTable table = new JTable(tableModel);
@@ -53,7 +54,6 @@ public class QLSVView extends JFrame {
     }
 
     public void setReset() {
-
         for(int i = 1; i <= tableModel.getRowCount(); i++){
             tableModel.removeRow(i);
         }
@@ -87,39 +87,48 @@ public class QLSVView extends JFrame {
         //Tạo controller -> addActionListener
 
         // Header
-        // JPanel JPanel_header = new JPanel(new FlowLayout());
-        // JLabel jLabel_header = new JLabel("");
 
         // Center  
         tableModel.addColumn("Mã sinh viên");
         tableModel.addColumn("Tên sinh viên");
         tableModel.addColumn("Địa chỉ");
         tableModel.addColumn("Ngày sinh");
-        // tableModel.addColumn("Giới tính");
 
         table.getSelectionModel().addListSelectionListener(qlsvController.getMouseListener());
 
         JScrollPane scrollPane = new JScrollPane(table);
         
-        JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
         
-        if(prio.equals("root")){
-            JButton crudButton = new JButton("Thêm/Sửa/Xóa");
-            crudButton.addActionListener(qlsvController);
-            buttonPanel.add(crudButton);
-        } 
-
+        
         JButton filterButton = new JButton("Lọc");
         filterButton.addActionListener(qlsvController);
-        buttonPanel.add(filterButton);
 
         JButton scoreButton = new JButton("Bảng điểm");
         scoreButton.addActionListener(qlsvController);
-        buttonPanel.add(scoreButton);
 
         JButton logOutButton = new JButton("Đăng xuất");
         logOutButton.addActionListener(qlsvController);
+
+        JPanel buttonPanel = new JPanel(new GridLayout(1,3));   
+        
+        buttonPanel.add(filterButton);
+        buttonPanel.add(scoreButton);
         buttonPanel.add(logOutButton);
+        if(prio.equals("root")){
+            buttonPanel.setLayout(new GridLayout(2, 3));
+
+            JButton crudButton = new JButton("Thêm/Sửa/Xóa");
+            crudButton.addActionListener(qlsvController);
+            buttonPanel.add(crudButton);
+
+            JButton createAccButton = new JButton("Tạo tài khoản");
+            createAccButton.addActionListener(qlsvController);
+            buttonPanel.add(createAccButton);
+
+            JButton deleteAccButton = new JButton("Xóa tài khoản");
+            deleteAccButton.addActionListener(qlsvController);
+            buttonPanel.add(deleteAccButton);
+        } 
 
         JPanel_main.add(scrollPane, BorderLayout.CENTER);
         JPanel_main.add(buttonPanel, BorderLayout.SOUTH);
@@ -155,27 +164,29 @@ public class QLSVView extends JFrame {
         }
     }
 
-    public void switchToCrudView() throws ParseException {
+    public CrudView switchToCrudView() throws ParseException {
         // Tạo một crudView mới 
-        CrudView crudView = new CrudView(qlsvModel, scoreModel, this);
-        // this.setVisible(false);
+        return new CrudView(qlsvModel, scoreModel, this);
+    }
+
+    public CrudView switchToCrudAccView(){
+        return new CrudView(accModel, this);
     }
 
     public void switchToFilterView() throws ParseException {
         // Tạo một Filter View mới
         FilterView filterView = new FilterView(qlsvModel, this);
-        // this.setVisible(false);
     }
 
     public void switchToScoreView() throws ParseException {
         // Tạo một Filter View mới
         ScoreView scoreView = new ScoreView(prio, qlsvModel, scoreModel);
-        // this.setVisible(false);
     }
 
     public void logout(){
         this.setVisible(false);
         AuthView authView = new AuthView(accModel, qlsvModel, scoreModel);
     }
+
 
 }

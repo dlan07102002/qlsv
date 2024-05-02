@@ -215,10 +215,6 @@ public class ScoreModelDAO implements DAOInterface<Score>{
             }
             Collections.sort(scoreList);
 
-            System.out.println("Min: " + scoreList.get(0));
-            System.out.println("Max: " + scoreList.get(scoreList.size()-1));
-            System.out.println("Avarage: " + calculateAverage(scoreList));
-
             JDBCUtil.closeConnection(con);
 
         } catch (Exception e) {

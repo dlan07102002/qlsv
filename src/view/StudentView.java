@@ -17,7 +17,6 @@ public class StudentView extends JFrame {
 
     private JLabel lblStuCode, lblStuName, lblHomeTown, lblDob, lblGender, lblMatScore, lblPhyScore, lblCheScore, lblTotalScore, lblType;
     private JLabel txtStuCode, txtStuName, txtHomeTown, txtDob, txtGender, txtMatScore, txtPhyScore, txtCheScore, txtTotalScore, txtType;
-    private JButton jButton_filter;
 
     public StudentView(int stuCode, QLSVModel qlsvModel, ScoreModel scoreModel){
         this.qlsvModel =  qlsvModel;
@@ -36,19 +35,23 @@ public class StudentView extends JFrame {
     }
 
     private void init(Student stu, Score sco) {
-        // flag = true;
+        this.setTitle("Thông tin sinh viên");
+
         this.setLayout(new BorderLayout());
         JPanel jpanel_center = new JPanel(new GridLayout(9  , 2));
         this.setBackground(Color.BLACK);
        
         this.setSize(300, 300);
         this.setLocationRelativeTo(null);
-        
+
+        Font fontTitlle = new Font("Arial", Font.BOLD, 12);
 
         lblStuCode = new JLabel("Mã Sinh Viên: ");
         txtStuCode =  new JLabel(stu.getStuCode()+"");
+
         lblStuName = new JLabel("Họ và Tên:");
         txtStuName =  new JLabel(stu.getStuName()+"");
+
         lblHomeTown = new JLabel("Quê quán: ");
         txtHomeTown =  new JLabel(stu.getHomeTown()+"");
         lblDob = new JLabel("Ngày sinh:");
@@ -85,6 +88,26 @@ public class StudentView extends JFrame {
         jpanel_center.add(txtCheScore);
         jpanel_center.add(lblType);
         jpanel_center.add(txtType);
+
+
+        boolean j = true; 
+        for (int i = 0; i < jpanel_center.getComponentCount(); i++) {
+            JLabel label = (JLabel) jpanel_center.getComponent(i);
+            
+            label.setOpaque(true);
+            label.setBorder(BorderFactory.createEmptyBorder(0, 10, 0, 0));
+            Color backgroundColor = (j) ? Color.LIGHT_GRAY : new Color(230 , 230 , 230); // Chọn màu nền xen kẽ
+            label.setBackground(backgroundColor);
+
+            if(i%2==1){ 
+                j = !j;
+            }
+            else {
+                label.setFont(fontTitlle);
+            }
+            System.out.println(" " + j);
+            
+        }
 
         this.add(jpanel_center, BorderLayout.CENTER);
         

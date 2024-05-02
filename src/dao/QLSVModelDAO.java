@@ -174,5 +174,44 @@ public class QLSVModelDAO implements DAOInterface<Student> {
         return null;
         // throw new UnsupportedOperationException("Unimplemented method 'selectByCondition'");
     }
+
+    public ArrayList<Student> selectByName(String name) {
+        ArrayList<Student> stuList = new ArrayList<Student>();
+        try {
+            
+            Connection con = JDBCUtil.getConnection();
+
+            Statement st = con.createStatement();
+
+            String sql = "SELECT * FROM stulist WHERE stu_name LIKE '%" + name + "%'";
+
+            //Khi execute query sẽ trả về object ResultSet, giống như một table, 
+            // có nhiều dòng
+            ResultSet rs = st.executeQuery(sql);
+            
+            while(rs.next()){
+                int stuCode = rs.getInt("stu_code");
+                String stuName = rs.getString("stu_name");
+                String homeTown = rs.getString("home_town");
+                Date dateOfBirth = rs.getDate("dob");
+                boolean gender = rs.getBoolean("gender");
+                Student obj = new Student(stuCode, stuName, homeTown, dateOfBirth, gender);
+                stuList.add(obj);
+            }
+
+            System.out.println("Ban da thuc thi " + sql);
+
+            JDBCUtil.closeConnection(con);
+
+        } catch (Exception e) {
+            // TODO: handle exception
+            e.printStackTrace();
+        }
+        return stuList;
+    }
+
+
+
+
     
 }

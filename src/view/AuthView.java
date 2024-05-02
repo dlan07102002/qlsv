@@ -38,7 +38,7 @@ public class AuthView extends JFrame {
     private void init() {
         this.setLayout(new BorderLayout());
         this.setSize(300, 150);
-        // this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setLocationRelativeTo(null);
 
         //Tạo controller
@@ -95,7 +95,6 @@ public class AuthView extends JFrame {
         else {
             try {
                 this.setVisible(false);
-
                 new QLSVView("not root", accountModel, qlsvModel, scoreModel);
             } catch (ParseException e) {
                 // TODO Auto-generated catch block

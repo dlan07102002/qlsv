@@ -32,9 +32,7 @@ public class Test {
         } catch(Exception e){
             e.printStackTrace();
         }
-        // new AuthView(accModel, qlsvModel, scoreModel);
-        new QLSVView("root", accModel, qlsvModel, scoreModel); 
-        ScoreModelDAO.getInstance().selectScore(1);
-        // new SubjectView();
+        new AuthView(accModel, qlsvModel, scoreModel);
+        
     }
 }

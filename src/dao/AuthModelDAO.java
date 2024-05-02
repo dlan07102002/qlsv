@@ -17,13 +17,50 @@ public class AuthModelDAO implements DAOInterface<Account> {
 
     @Override
     public int insert(Account t) {
-       return 0;
+        try {
+            Connection con = JDBCUtil.getConnection();
+
+            Statement st = con.createStatement();
+
+            String sqlInsert = "INSERT INTO `qlsv`.`acclist` (`username`, `passwrd`)"
+                            + "VALUES ('" + t.getUsername() + "', '" + t.getPassword() + "');";
+        
+            int res = st.executeUpdate(sqlInsert);
+                        
+            System.out.println("Ban da thuc thi " + sqlInsert);
+
+            System.out.println("Có " + res +  " dòng thay đổi");
+
+            JDBCUtil.closeConnection(con);
+
+        } catch (Exception e) {
+            // TODO: handle exception
+            e.printStackTrace();
+        }
+        return 0;
     }
 
 
     @Override
     public int drop(Account t) {
-       
+        try {
+            Connection con = JDBCUtil.getConnection();
+
+            Statement st = con.createStatement();
+
+            String sql = "DELETE FROM `qlsv`.`acclist` WHERE (`username` = '" + t.getUsername() +"')";
+
+            int res = st.executeUpdate(sql);
+                        
+            System.out.println("Ban da thuc thi " + sql);
+            System.out.println("Có " + res +  " dòng thay đổi");
+
+            JDBCUtil.closeConnection(con);
+
+        } catch (Exception e) {
+            // TODO: handle exception
+            e.printStackTrace();
+        }
         return 0;
     }
 

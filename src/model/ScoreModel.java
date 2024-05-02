@@ -42,22 +42,6 @@ public class ScoreModel {
         ScoreModelDAO.getInstance().update(scoDist);
     }
 
-    // public ArrayList<Score> sort(){
-    //     try {
-    //         //JDBC - JAVA DB connectivity
-    //         //MVC - model view controller
-    //         //sql -> list đã sắp xếp
-    //         //set list đấy ra view
-    //         ArrayList<Score> list = ScoreModelDAO.getInstance().selectByCondition("sort");
-    //         // this.setScoreList(list);
-    //         return list;
-    //     } catch (Exception e) {
-    //         System.out.println(e.getMessage());
-    //     }
-    //     System.out.println("Created score");
-    //     return null;
-    // }
-
     public ScoreModel sort(){
         scoreList.sort((Comparator<? super Score>) new Comparator<Score>() {
             @Override
