@@ -24,8 +24,15 @@ public class AuthView extends JFrame {
     private JButton jButton_login;
     private JPasswordField txtPassword;
 
+    // public static void main(String[] args) {
+    // QLSVModel qlsvModel = new QLSVModel();
+    // ScoreModel scoreModel = new ScoreModel();
+    // AccountModel accModel = new AccountModel();
 
-    public AuthView(AccountModel accountModel, QLSVModel qlsvModel, ScoreModel scoreModel){
+    // new AuthView(accModel, qlsvModel, scoreModel);
+    // }
+
+    public AuthView(AccountModel accountModel, QLSVModel qlsvModel, ScoreModel scoreModel) {
         this.accountModel = accountModel;
         this.qlsvModel = qlsvModel;
         this.scoreModel = scoreModel;
@@ -34,24 +41,23 @@ public class AuthView extends JFrame {
         init();
     }
 
-    
     private void init() {
         this.setLayout(new BorderLayout());
         this.setSize(300, 150);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setLocationRelativeTo(null);
 
-        //Tạo controller
+        // Tạo controller
         AuthController authController = new AuthController(this);
 
-        JPanel jPanel_center = new JPanel(new GridLayout(2,2));
+        JPanel jPanel_center = new JPanel(new GridLayout(2, 2));
         lblUsername = new JLabel("Tên đăng nhập: ");
         txtUsername = new JTextField();
         lblPassword = new JLabel("Mật khẩu: ");
         txtPassword = new JPasswordField();
 
-        //Tạo Controller
-        jButton_login  = new JButton("Đăng nhập");
+        // Tạo Controller
+        jButton_login = new JButton("Đăng nhập");
         jButton_login.addActionListener(authController);
 
         jPanel_center.add(lblUsername);
@@ -65,41 +71,39 @@ public class AuthView extends JFrame {
         this.setVisible(true);
     }
 
-    public void login(){
+    public void login() {
         String username = txtUsername.getText();
         String password = txtPassword.getText();
-        //Instance tk
+        // Instance tk
         ArrayList<Account> list = this.accountModel.getAccList();
         Account newAcc = null;
         // Account root = new Account(accountModel.g, password)
         for (Account account : list) {
-            //String - reference data, k dùng == , phải dùng equals
-            if(username.equals(account.getUsername() )&& password.equals(account.getPassword())){
+            // String - reference data, k dùng == , phải dùng equals
+            if (username.equals(account.getUsername()) && password.equals(account.getPassword())) {
                 newAcc = new Account(username, password);
             }
         }
-        //TK 
-        if(accountModel.isRoot(username, password)){
+        // TK
+        if (accountModel.isRoot(username, password)) {
             try {
                 this.setVisible(false);
 
-                new QLSVView("root",accountModel, qlsvModel, scoreModel);
+                new QLSVView("root", accountModel, qlsvModel, scoreModel);
             } catch (ParseException e) {
                 // TODO Auto-generated catch block
                 e.printStackTrace();
-            } 
-        }
-        else if(newAcc == null){
+            }
+        } else if (newAcc == null) {
             JOptionPane.showMessageDialog(this, "tên đăng nhập hoặc mật khẩu không đúng");
-        }
-        else {
+        } else {
             try {
                 this.setVisible(false);
                 new QLSVView("not root", accountModel, qlsvModel, scoreModel);
             } catch (ParseException e) {
                 // TODO Auto-generated catch block
                 e.printStackTrace();
-            } 
+            }
         }
     }
 }
